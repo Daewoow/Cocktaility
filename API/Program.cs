@@ -23,19 +23,33 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-var staticFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "src", "pages");
-var publicFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "src", "scripts");
+var pagesFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "src", "pages");
+var imagesFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "public", "images");
+var stylesFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "src", "styles");
+var scriptsFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "src", "scripts");
 
 app.UseDefaultFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(staticFilesPath),
+    FileProvider = new PhysicalFileProvider(pagesFilesPath),
     RequestPath = ""
 });
 
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(publicFilesPath),
+    FileProvider = new PhysicalFileProvider(imagesFilesPath),
+    RequestPath = "/public/images"
+});
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(stylesFilesPath),
+    RequestPath = "/styles"
+});
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(scriptsFilesPath),
     RequestPath = "/scripts"
 });
 
