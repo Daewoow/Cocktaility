@@ -1,4 +1,4 @@
-const loginUrl = "/login";
+const registerUrl = "/Account/Register";
 console.log("Check");
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -6,15 +6,21 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     const email = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const repeatedPassword = document.getElementById('repeat-password').value;
     const errorMessage = document.getElementById('error-message');
 
-    if (!username || !password) {
+    if (!username || !password || !repeatedPassword) {
         errorMessage.textContent = 'Пожалуйста, заполните все поля.';
         errorMessage.style.display = 'block';
         return;
     }
+    if (password !== repeatedPassword) {
+        errorMessage.textContent = 'Пароли не совпадают';
+        errorMessage.style.display = 'block';
+        return;
+    }
 
-    fetch(loginUrl, {
+    fetch(registerUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -27,7 +33,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                 console.log('succsess: ', data.success);
                 window.location.href = "/mainpage";
             } else {
-                errorMessage.textContent = data.message || 'Ошибка авторизации';
+                errorMessage.textContent = data.message || 'Ошибка регистрации';
                 errorMessage.style.display = 'block';
             }
         })
