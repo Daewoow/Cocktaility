@@ -1,17 +1,26 @@
 ﻿using API.Database;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-public class ApplicationContext : DbContext
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+public class ApplicationContext : IdentityDbContext<AppUser>
 {
-    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<AppUser> Users { get; set; } = null!;
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
         Database.EnsureCreated();  
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>().HasKey(x => x.Id);
-        modelBuilder.Entity<User>().Property(x => x.Id)
-            .ValueGeneratedOnAdd();
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<AppUser>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Id).ValueGeneratedOnAdd();
+        });
+        modelBuilder.Entity<AppUser>().ToTable("Users");
     }
 }

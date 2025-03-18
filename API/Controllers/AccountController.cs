@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using API.Controllers;
 using API.Database;
 using API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,11 +70,11 @@ public class AccountController(ApplicationContext context) : ControllerBase
             return false;
         }
 
-        var newUser = new User
+        var newUser = new AppUser
         {
             Email = request.Email,
             Password = request.Password,
-            IsAdmin = false,
+            IsAdmin = false
         };
         context.Users.Add(newUser);
         return await context.SaveChangesAsync() == 1;
