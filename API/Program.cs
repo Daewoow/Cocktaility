@@ -27,35 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-var pagesFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "src", "pages");
-var imagesFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "public", "images");
-var stylesFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "src", "styles");
-var scriptsFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "CockUI", "src", "scripts");
 
-app.UseDefaultFiles();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(pagesFilesPath),
-    RequestPath = ""
-});
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(imagesFilesPath),
-    RequestPath = "/public/images"
-});
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(stylesFilesPath),
-    RequestPath = "/styles"
-});
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(scriptsFilesPath),
-    RequestPath = "/scripts"
-});
+app.UseStaticFiles();
 
 app.UseRouting();
 app.MapControllers();
@@ -65,7 +38,7 @@ app.MapGet("/user/{id:int}", async (int id, ApplicationContext db) =>
     await db.Users.FirstOrDefaultAsync(x => x.Id == id.ToString()));
 app.MapGet("/mainpage", context =>
 {
-    context.Response.Redirect("/index.html");
+    context.Response.Redirect("/src/pages/index.html");
     return Task.CompletedTask;
 });
 

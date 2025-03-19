@@ -22,4 +22,8 @@
       <Folder Include="Migrations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="wwwroot\.idea\.gitignore" />
+    </ItemGroup>
+
 </Project>

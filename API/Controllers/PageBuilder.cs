@@ -11,7 +11,7 @@ public class PageBuilder
     private string layout;
     private Dictionary<string, string> sections = new();
     public string Title { get; init; } = "ХУЙ";
-    public string Root { get; init; } = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.FullName, "CockUI");
+    public string Root { get; init; } = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.FullName, "API/wwwroot");
     
     public PageBuilder AddLayout(string path)
     {
