@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Коктейлити - Поиск</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles/search.css">
+    <link rel="stylesheet" href="/src/styles/card.css">
+</head>
+<body>
+<div class="search-wrapper">
+    <!-- Логотип -->
+    <div class="logo">
+        <img src="/public/images/logo.png" alt="Логотип Коктейлити">
+    </div>
+    <h2 class="search-title">Какой коктейль ты хочешь выпить сегодня?</h2>
+
+    <!-- Форма поиска -->
+    <div class="search-container">
+        <form id="searchForm">
+            <div class="input-group">
+                <input type="search" id="searchQuery" name="query" placeholder="Введите ингредиент" required>
+            </div>
+            <button type="submit">Применить</button>
+        </form>
+    </div>
+</div>
+<script src="/src/scripts/search.js"></script>
+</body>
+</html>
