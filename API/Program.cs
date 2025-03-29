@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.WebHost.UseUrls("http://+:5184");
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -50,6 +50,11 @@ app.MapControllers();
 app.MapGet("/users", [Authorize(Roles = "Admin")]async (ApplicationContext db) => await db.Users.ToListAsync());
 app.MapGet("/user/{id:int}", [Authorize]async (int id, ApplicationContext db) =>
     await db.Users.FirstOrDefaultAsync(x => x.Id == id.ToString())); // TODO: id теперь Guid
+app.MapGet("/negr", context =>
+{
+    context.Response.Redirect("/src/pages/index.html");
+    return Task.CompletedTask;
+});
 app.MapGet("/mainpage", context =>
 {
     context.Response.Redirect("/src/pages/index.html");

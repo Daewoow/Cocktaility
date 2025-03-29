@@ -2,17 +2,18 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace API.Controllers;
+
 /// <remarks>
 /// @Body, @Scripts
 /// </remarks>
 public class PageBuilder
 {
-    private string result = "";
     private string layout;
     private Dictionary<string, string> sections = new();
+
     public string Title { get; init; } = "ХУЙ";
-    public string Root { get; init; } = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.FullName, "API/wwwroot");
-    
+    public string Root { get; init; } = "/app/wwwroot/"; // абсолютный путь - немного моветон, надо будет поменять, но я очень хочу спать и боюсь, что всё сломается
+
     public PageBuilder AddLayout(string path)
     {
         var finalPath = Path.Combine(Root, path);
@@ -33,11 +34,11 @@ public class PageBuilder
     {
         if (paths.Length == 0)
             return this;
-        var elements = String.Join("\n", paths.Select(f => $"<script type='text/javascript' src='{f}'></script>"));
+        var elements = string.Join("\n", paths.Select(f => $"<script type='text/javascript' src='{f}'></script>"));
         sections.Add("Scripts", elements);
         return this;
     }
-    
+
     public string Build()
     {
         var pattern = @"(@[a-zA-Zа-яА-Я]+\b)";

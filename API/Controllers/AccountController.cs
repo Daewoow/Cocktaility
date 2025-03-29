@@ -63,7 +63,7 @@ public class AccountController(ApplicationContext context) : ControllerBase
             }
             .AddLayout("src/test/mainLayout.html")
             .AddBody("src/test/register.html")
-            .AddScripts("/scripts/register.js")
+            .AddScripts("/src/scripts/register.js")
             .Build();
         return Content(page, "text/html");
     }

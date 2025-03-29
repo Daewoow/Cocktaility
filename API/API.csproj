@@ -27,7 +27,6 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
-      <Content Include="wwwroot\.idea\.gitignore" />
     </ItemGroup>
 
 </Project>
