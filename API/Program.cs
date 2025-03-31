@@ -26,10 +26,11 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Admin"));
 });
 
+
+builder.Services.AddScoped<BarService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-
 
 var app = builder.Build();
 
