@@ -33,8 +33,9 @@ body {
 
 /* Форма поиска */
 .search-container {
+    position: relative;
     width: 560px;
-    margin: 0 auto;
+    margin: 50px auto;
     text-align: center;
 }
 
@@ -76,4 +77,44 @@ button[type="submit"]:hover {
     font-size: 32px;
     margin-bottom: 30px;
     color: #333;
+}
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-item:hover {
+    background-color: #e9e9e9;
+}
+
+.input-group {
+    position: relative;
+}
+
+#selected-tag-list {
+    display: flex;
+    flex-direction: column;  /* Главная ось - вертикаль */
+    gap: 10px;  /* Отступ между элементами */
+}
+
+#search-results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
 }

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Database;
+namespace API.Models;
 
 public class Favorite
 {
-    [Required]
+    [Key]
     public int FavId { get; set; }
 
     [Required]

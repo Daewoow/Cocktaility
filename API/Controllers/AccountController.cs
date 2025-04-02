@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using API.Controllers;
-using API.Database;
+using API.Models;
 using API.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
-[Route("[controller]/[action]")]
-public class AccountController(ApplicationContext context) : ControllerBase
+[Route("[action]")]
+public class AccountController(ApplicationContext context, PageBuilder builder) : ControllerBase
 {
     [HttpGet]
     public IActionResult Login()
@@ -21,8 +21,8 @@ public class AccountController(ApplicationContext context) : ControllerBase
         {
             Title = "Login",
         }
-        .AddLayout("src/test/mainLayout.html")
-        .AddBody("src/test/login.html")
+        .AddLayout("src/components/mainLayout.html")
+        .AddBody("src/components/login.html")
         .AddScripts("/src/scripts/login.js")
         .Build();
         return Content(page, "text/html");
@@ -61,8 +61,8 @@ public class AccountController(ApplicationContext context) : ControllerBase
             {
                 Title = "Register",
             }
-            .AddLayout("src/test/mainLayout.html")
-            .AddBody("src/test/register.html")
+            .AddLayout("src/components/mainLayout.html")
+            .AddBody("src/components/register.html")
             .AddScripts("/src/scripts/register.js")
             .Build();
         return Content(page, "text/html");

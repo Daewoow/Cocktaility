@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace API.Controllers;
@@ -10,13 +11,19 @@ public class PageBuilder
 {
     private string layout;
     private Dictionary<string, string> sections = new();
-
+    
+    private static string? root;
     public string Title { get; init; } = "ХУЙ";
-    public string Root { get; init; } = "/app/wwwroot/"; // абсолютный путь - немного моветон, надо будет поменять, но я очень хочу спать и боюсь, что всё сломается
+
+    public static void SetRoot(string root)
+    {
+        PageBuilder.root = root;
+    }
+
 
     public PageBuilder AddLayout(string path)
     {
-        var finalPath = Path.Combine(Root, path);
+        var finalPath = Path.Combine(root, path);
         var l = File.ReadAllText(finalPath);
         layout = l;
         return this;
@@ -24,7 +31,7 @@ public class PageBuilder
 
     public PageBuilder AddBody(string path)
     {
-        var finalPath = Path.Combine(Root, path);
+        var finalPath = Path.Combine(root, path);
         var body = File.ReadAllText(finalPath);
         sections.Add("Body", body);
         return this;
@@ -37,6 +44,12 @@ public class PageBuilder
         var elements = string.Join("\n", paths.Select(f => $"<script type='text/javascript' src='{f}'></script>"));
         sections.Add("Scripts", elements);
         return this;
+    }
+
+    public string LoadEntirePage(string path)
+    {
+        var finalPath = Path.Combine(root, path);
+        return  File.ReadAllText(finalPath);
     }
 
     public string Build()

@@ -2,11 +2,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Database;
+namespace API.Models;
 
 public class AppUser
 {
-    [Required]
+    [Key]
     public string Id { get; set; }
     [Required]
     public bool IsAdmin { get; set; }
@@ -16,5 +16,5 @@ public class AppUser
     [Required]
     public string Email { get; set; }
     
-    public IEnumerable<Favorite> Favorites { get; set; } = new List<Favorite>();
+    public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
 }

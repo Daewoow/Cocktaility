@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Database;
+namespace API.Models;
 
 public class Bar
 {
-    [Required]
-    public int BarId { get; init; }
+    [Key]
+    public int Id { get; set; }
 
     [Required]
     public string Name { get; set; }
@@ -27,7 +27,7 @@ public class Bar
     
     public string TimeOfWork { get; set; }
     
-    public IEnumerable<Tag> Tags { get; set; } = new List<Tag>();
+    public ICollection<Tag> Tags { get;  } = new List<Tag>();
     
-    public IEnumerable<Favorite> FavoritedByUsers { get; set; } = new List<Favorite>();
+    public ICollection<Favorite> FavoritedByUsers { get; set; } = new List<Favorite>();
 }

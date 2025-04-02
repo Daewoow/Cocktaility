@@ -1,19 +1,22 @@
-﻿using API.Requests;
+﻿using API.Models;
+using API.Requests;
+using API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-public class BarsController : ControllerBase
+[Route("/")]
+public class BarsController(BarService barService) : ControllerBase
 {
-    private readonly BarService _barService;
-
-    public BarsController(BarService barService)
+    [HttpGet("search")]
+    public async Task<IActionResult> GetBars()
     {
-        _barService = barService;
+        var page = new PageBuilder()
+            .LoadEntirePage("src/pages/search.html");
+        return Content(page, "text/html");
     }
-
+    
     [HttpPost("search")]
     public async Task<IActionResult> SearchBars([FromBody] SearchRequest request)
     {
@@ -22,17 +25,24 @@ public class BarsController : ControllerBase
             return BadRequest("Список тегов не может быть пустым.");
         }
 
-        var bars = await _barService.SearchBarsAsync(request.Tags);
+        var bars = await barService.SearchBarsAsync(request.Tags);
 
-        return Ok(bars);
+        return Ok(bars.Select(b => new BarViewModel(b)));
     }
 
     [HttpGet("/bars/{id:int}")]
     public async Task<IActionResult> GetBarById(int id)
     {
-        var bar = await _barService.GetBarById(id);
+        var bar = await barService.GetBarById(id);
         if (bar is null)
             return NotFound();
         return Ok(bar);
+    }
+
+    [HttpGet("tags")]
+    public async Task<IActionResult> GetAllTags()
+    {
+        var tags = await barService.GetAllTags();
+        return Ok(tags);
     }
 }

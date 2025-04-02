@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Database;
+namespace API.Models;
 
 public class Tag
 {
-    [Required]
-    public int TagId { get; set; }
+    [Key]
+    public int Id { get; set; }
     
     [Required]
     public string Name { get; set; }
     
-    public IEnumerable<Bar> Bars { get; set; }
+    public ICollection<Bar> Bars { get;}
 }

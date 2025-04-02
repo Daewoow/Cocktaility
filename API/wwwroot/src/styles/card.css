@@ -6,7 +6,8 @@
     background-color: #FFAC81;
     font-family: 'IBM Plex Mono', monospace;
     transition: transform 0.3s ease;
-
+    /*flex: 1 1 200px; !* Минимальная ширина 200px *!*/
+    padding: 20px;
 }
 
 .venue-card:hover {
@@ -17,6 +18,7 @@
     width: 100%;
     height: 180px;
     object-fit: cover;
+    border-radius: 4px;
 }
 
 .venue-info {
@@ -55,4 +57,5 @@
     border-radius: 4px;
     font-size: 16px;
     font-style: italic;
+    font-weight: 300;
 }

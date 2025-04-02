@@ -19,12 +19,17 @@
 
     <!-- Форма поиска -->
     <div class="search-container">
-        <form id="searchForm">
-            <div class="input-group">
-                <input type="search" id="searchQuery" name="query" placeholder="Введите ингредиент" required>
-            </div>
-            <button type="submit">Применить</button>
-        </form>
+
+        <div class="input-group">
+            <input type="search" id="search-input" name="query" placeholder="Введите ингредиент" required>
+            <div id="autocomplete-list" class="autocomplete-items"></div>
+        </div>
+        <button type="submit">Применить</button>
+    </div>
+    <div id="selected-tag-list">
+    </div>
+    <div id="search-results">
+
     </div>
 </div>
 <script src="/src/scripts/search.js"></script>

@@ -1,5 +1,6 @@
 using System.Net.Quic;
-using API.Database;
+using API.Controllers;
+using API.Models;
 using API.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -28,6 +29,8 @@ builder.Services.AddAuthorization(options =>
 
 
 builder.Services.AddScoped<BarService>();
+builder.Services.AddScoped<PageBuilder>();
+builder.Services.AddScoped<PageBuilder>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
@@ -54,6 +57,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// ляляля
+PageBuilder.SetRoot(app.Environment.WebRootPath);
 
 app.MapGet("/users", [Authorize(Roles = "Admin")]async (ApplicationContext db) => await db.Users.ToListAsync());
 app.MapGet("/user/{id:int}", [Authorize]async (int id, ApplicationContext db) =>

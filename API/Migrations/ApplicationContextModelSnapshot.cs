@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace API.Entities
+namespace API.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot
@@ -20,10 +20,9 @@ namespace API.Entities
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("API.Database.AppUser", b =>
+            modelBuilder.Entity("API.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
@@ -39,16 +38,16 @@ namespace API.Entities
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.Database.Bar", b =>
+            modelBuilder.Entity("API.Models.Bar", b =>
                 {
-                    b.Property<int>("BarId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BarId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -77,14 +76,14 @@ namespace API.Entities
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("BarId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Bars", (string)null);
+                    b.ToTable("Bars");
 
                     b.HasData(
                         new
                         {
-                            BarId = 1,
+                            Id = 1,
                             Address = "просп. Ленина, 20А",
                             Menu = "https://vk.com/doc792294115_687636926",
                             Name = "Негодяи",
@@ -95,7 +94,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 2,
+                            Id = 2,
                             Address = "ул. Малышева, 21/4",
                             Menu = "https://nelsonsauvin.ru/#menu",
                             Name = "Нельсон Совин",
@@ -106,7 +105,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 3,
+                            Id = 3,
                             Address = "ул. Хохрякова, 3а",
                             Menu = "https://tomesto.ru/ekaterinburg/places/besy",
                             Name = "Бесы",
@@ -117,7 +116,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 4,
+                            Id = 4,
                             Address = "ул. Вайнера, 9а",
                             Menu = "https://killfish.ru/menu.html",
                             Name = "KILLFISH",
@@ -128,7 +127,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 5,
+                            Id = 5,
                             Address = "ул. Малышева, 29",
                             Menu = "https://killfish.ru/menu.html",
                             Name = "Мам я в хлам",
@@ -139,7 +138,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 6,
+                            Id = 6,
                             Address = "ул. 8 Марта, 8Г",
                             Menu = "https://klktv91.ru/menu",
                             Name = "Коллектив",
@@ -150,7 +149,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 7,
+                            Id = 7,
                             Address = "ул. 8 Марта, 31",
                             Menu = "https://polki-centr.ru/price/",
                             Name = "Полки LOUNGE",
@@ -161,7 +160,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 8,
+                            Id = 8,
                             Address = "ул. 8 Марта, 31в",
                             Menu = "https://theoutbar.ru/menu",
                             Name = "Караоке THE OUT BAR",
@@ -172,7 +171,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 9,
+                            Id = 9,
                             Address = "ул. Малышева, 29А",
                             Menu = "http://samocvet.ekb.tilda.ws/#menu",
                             Name = "Самоцвет",
@@ -183,7 +182,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 10,
+                            Id = 10,
                             Address = "ул. Малышева, 19",
                             Menu = "https://vk.com/doc1473743_673529194?hash=TVz29uze1pOgq4GJrqZcNw3tz4qefoQvzW09fXHgER0&dl=lJjDd3sWQviO9DpszKzAGB0GL75kTyFpsks90YThXKT",
                             Name = "Здоровье",
@@ -194,7 +193,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 11,
+                            Id = 11,
                             Address = "ул. Розы Люксембург, 14",
                             Menu = "https://vk.com/bar.stavnikov?z=album-205091375_303719416",
                             Name = "Ставников",
@@ -205,7 +204,7 @@ namespace API.Entities
                         },
                         new
                         {
-                            BarId = 12,
+                            Id = 12,
                             Address = "просп. Ленина, 49",
                             Menu = "https://grottbar.ru/menu",
                             Name = "Гротт Бар",
@@ -216,7 +215,7 @@ namespace API.Entities
                         });
                 });
 
-            modelBuilder.Entity("API.Database.Favorite", b =>
+            modelBuilder.Entity("API.Models.Favorite", b =>
                 {
                     b.Property<int>("FavId")
                         .ValueGeneratedOnAdd()
@@ -237,107 +236,62 @@ namespace API.Entities
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Favorites", (string)null);
+                    b.ToTable("Favorites");
                 });
 
-            modelBuilder.Entity("API.Database.Tag", b =>
+            modelBuilder.Entity("API.Models.Tag", b =>
                 {
-                    b.Property<int>("TagId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TagId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("TagId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Tags", (string)null);
-                });
-
-            modelBuilder.Entity("BarTag", b =>
-                {
-                    b.Property<int>("BarsBarId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TagsTagId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("BarsBarId", "TagsTagId");
-
-                    b.HasIndex("TagsTagId");
-
-                    b.ToTable("BarTag");
+                    b.ToTable("Tags");
 
                     b.HasData(
                         new
                         {
-                            BarsBarId = 1,
-                            TagsTagId = 2
+                            Id = 1,
+                            Name = "веселый"
                         },
                         new
                         {
-                            BarsBarId = 1,
-                            TagsTagId = 3
-                        },
-                        new
-                        {
-                            BarsBarId = 1,
-                            TagsTagId = 4
-                        },
-                        new
-                        {
-                            BarsBarId = 2,
-                            TagsTagId = 5
-                        },
-                        new
-                        {
-                            BarsBarId = 2,
-                            TagsTagId = 9
-                        },
-                        new
-                        {
-                            BarsBarId = 7,
-                            TagsTagId = 6
-                        },
-                        new
-                        {
-                            BarsBarId = 7,
-                            TagsTagId = 7
-                        },
-                        new
-                        {
-                            BarsBarId = 8,
-                            TagsTagId = 8
-                        },
-                        new
-                        {
-                            BarsBarId = 9,
-                            TagsTagId = 2
-                        },
-                        new
-                        {
-                            BarsBarId = 10,
-                            TagsTagId = 2
-                        },
-                        new
-                        {
-                            BarsBarId = 11,
-                            TagsTagId = 2
+                            Id = 2,
+                            Name = "есть туалет"
                         });
                 });
 
-            modelBuilder.Entity("API.Database.Favorite", b =>
+            modelBuilder.Entity("BarTag", b =>
                 {
-                    b.HasOne("API.Database.Bar", "Bar")
+                    b.Property<int>("BarsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("BarsId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("BarTag");
+                });
+
+            modelBuilder.Entity("API.Models.Favorite", b =>
+                {
+                    b.HasOne("API.Models.Bar", "Bar")
                         .WithMany("FavoritedByUsers")
                         .HasForeignKey("BarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Database.AppUser", "User")
+                    b.HasOne("API.Models.AppUser", "User")
                         .WithMany("Favorites")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -350,25 +304,25 @@ namespace API.Entities
 
             modelBuilder.Entity("BarTag", b =>
                 {
-                    b.HasOne("API.Database.Bar", null)
+                    b.HasOne("API.Models.Bar", null)
                         .WithMany()
-                        .HasForeignKey("BarsBarId")
+                        .HasForeignKey("BarsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Database.Tag", null)
+                    b.HasOne("API.Models.Tag", null)
                         .WithMany()
-                        .HasForeignKey("TagsTagId")
+                        .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("API.Database.AppUser", b =>
+            modelBuilder.Entity("API.Models.AppUser", b =>
                 {
                     b.Navigation("Favorites");
                 });
 
-            modelBuilder.Entity("API.Database.Bar", b =>
+            modelBuilder.Entity("API.Models.Bar", b =>
                 {
                     b.Navigation("FavoritedByUsers");
                 });

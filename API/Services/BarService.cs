@@ -1,4 +1,4 @@
-﻿using API.Database;
+﻿using API.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class BarService
@@ -15,18 +15,20 @@ public class BarService
     {
         var tagIds = await _context.Tags
             .Where(t => tagNames.Contains(t.Name))
-            .Select(t => t.TagId)
+            .Select(t => t.Id)
             .ToListAsync();
 
         if (tagIds.Count == 0)
             return new List<Bar>();
 
         var bars = await _context.Bars
-            .Where(b => b.Tags.Any(bt => tagIds.Contains(bt.TagId)))
+            .AsNoTracking()
+            .Include(x => x.Tags)
+            .Where(b => b.Tags.Any(bt => tagIds.Contains(bt.Id)))
             .Select(b => new
             {
                 Bar = b,
-                MatchingTagsCount = b.Tags.Count(bt => tagIds.Contains(bt.TagId))
+                MatchingTagsCount = b.Tags.Count(bt => tagIds.Contains(bt.Id))
             })
             .OrderByDescending(x => x.MatchingTagsCount)
             .ThenBy(x => x.Bar.Name)
@@ -37,5 +39,10 @@ public class BarService
     }
 
     public async Task<Bar?> GetBarById(int id) 
-        => await _context.Bars.FirstOrDefaultAsync(b => b.BarId == id);
+        => await _context.Bars.FirstOrDefaultAsync(b => b.Id == id);
+
+    public async Task<IEnumerable<string>> GetAllTags()
+    {
+        return await _context.Tags.Select(t => t.Name).ToListAsync();
+    }
 }
