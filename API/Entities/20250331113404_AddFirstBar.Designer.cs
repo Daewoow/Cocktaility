@@ -25,7 +25,7 @@ namespace API.Entities
 
             modelBuilder.Entity("API.Database.AppUser", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("BarId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
@@ -40,7 +40,7 @@ namespace API.Entities
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("BarId");
 
                     b.ToTable("Users", (string)null);
                 });

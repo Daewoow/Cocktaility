@@ -73,13 +73,13 @@ namespace API.Migrations
                         name: "FK_BarTag_Bars_BarsId",
                         column: x => x.BarsId,
                         principalTable: "Bars",
-                        principalColumn: "Id",
+                        principalColumn: "BarId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BarTag_Tags_TagsId",
                         column: x => x.TagsId,
                         principalTable: "Tags",
-                        principalColumn: "Id",
+                        principalColumn: "BarId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -99,19 +99,19 @@ namespace API.Migrations
                         name: "FK_Favorites_Bars_BarId",
                         column: x => x.BarId,
                         principalTable: "Bars",
-                        principalColumn: "Id",
+                        principalColumn: "BarId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Favorites_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "BarId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Bars",
-                columns: new[] { "Id", "Address", "Menu", "Name", "Photo", "Rating", "Site", "TimeOfWork" },
+                columns: new[] { "BarId", "Address", "Menu", "Name", "Photo", "Rating", "Site", "TimeOfWork" },
                 values: new object[,]
                 {
                     { 1, "просп. Ленина, 20А", "https://vk.com/doc792294115_687636926", "Негодяи", "https://img.restoclub.ru/uploads/place/0/9/8/e/098e561454ac4d89aa8c755e0d181c55_w1230_h820--no-cut.webp?v=3", 0, "https://negodyai.com/", "будни: 12.00 - 03.00; выходные: 12.00 - 06.00" },
@@ -130,7 +130,7 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tags",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "BarId", "Name" },
                 values: new object[,]
                 {
                     { 1, "веселый" },

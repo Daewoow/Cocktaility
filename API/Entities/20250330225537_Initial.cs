@@ -102,7 +102,7 @@ namespace API.Entities
                         name: "FK_Favorites_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
+                        principalColumn: "BarId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Entities
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250331121540_AddFirstBars")]
-    partial class AddFirstBars
+    [Migration("20250403111102_PleaseFix")]
+    partial class PleaseFix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace API.Entities
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("API.Database.AppUser", b =>
+            modelBuilder.Entity("API.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +45,7 @@ namespace API.Entities
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("API.Database.Bar", b =>
+            modelBuilder.Entity("API.Models.Bar", b =>
                 {
                     b.Property<int>("BarId")
                         .ValueGeneratedOnAdd()
@@ -219,7 +219,7 @@ namespace API.Entities
                         });
                 });
 
-            modelBuilder.Entity("API.Database.Favorite", b =>
+            modelBuilder.Entity("API.Models.Favorite", b =>
                 {
                     b.Property<int>("FavId")
                         .ValueGeneratedOnAdd()
@@ -243,7 +243,7 @@ namespace API.Entities
                     b.ToTable("Favorites", (string)null);
                 });
 
-            modelBuilder.Entity("API.Database.Tag", b =>
+            modelBuilder.Entity("API.Models.Tag", b =>
                 {
                     b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
@@ -332,15 +332,15 @@ namespace API.Entities
                         });
                 });
 
-            modelBuilder.Entity("API.Database.Favorite", b =>
+            modelBuilder.Entity("API.Models.Favorite", b =>
                 {
-                    b.HasOne("API.Database.Bar", "Bar")
+                    b.HasOne("API.Models.Bar", "Bar")
                         .WithMany("FavoritedByUsers")
                         .HasForeignKey("BarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Database.AppUser", "User")
+                    b.HasOne("API.Models.AppUser", "User")
                         .WithMany("Favorites")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -353,25 +353,25 @@ namespace API.Entities
 
             modelBuilder.Entity("BarTag", b =>
                 {
-                    b.HasOne("API.Database.Bar", null)
+                    b.HasOne("API.Models.Bar", null)
                         .WithMany()
                         .HasForeignKey("BarsBarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Database.Tag", null)
+                    b.HasOne("API.Models.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagsTagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("API.Database.AppUser", b =>
+            modelBuilder.Entity("API.Models.AppUser", b =>
                 {
                     b.Navigation("Favorites");
                 });
 
-            modelBuilder.Entity("API.Database.Bar", b =>
+            modelBuilder.Entity("API.Models.Bar", b =>
                 {
                     b.Navigation("FavoritedByUsers");
                 });

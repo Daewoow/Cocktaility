@@ -6,7 +6,7 @@ namespace API.Models;
 public class Bar
 {
     [Key]
-    public int Id { get; set; }
+    public int BarId { get; set; }
 
     [Required]
     public string Name { get; set; }

@@ -7,16 +7,40 @@
 namespace API.Entities
 {
     /// <inheritdoc />
-    public partial class AddFirstBars : Migration
+    public partial class RollbackMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_BarTag_Bars_BarsBarId",
+                table: "BarTag");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_BarTag_Tags_TagsTagId",
+                table: "BarTag");
+
+            migrationBuilder.RenameColumn(
+                name: "TagsTagId",
+                table: "BarTag",
+                newName: "TagsId");
+
+            migrationBuilder.RenameColumn(
+                name: "BarsBarId",
+                table: "BarTag",
+                newName: "BarsId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_BarTag_TagsTagId",
+                table: "BarTag",
+                newName: "IX_BarTag_TagsId");
+
             migrationBuilder.InsertData(
                 table: "Bars",
                 columns: new[] { "BarId", "Address", "Menu", "Name", "Photo", "Rating", "Site", "TimeOfWork" },
                 values: new object[,]
                 {
+                    { 1, "просп. Ленина, 20А", "https://vk.com/doc792294115_687636926", "Негодяи", "https://img.restoclub.ru/uploads/place/0/9/8/e/098e561454ac4d89aa8c755e0d181c55_w1230_h820--no-cut.webp?v=3", 0, "https://negodyai.com/", "будни: 12.00 - 03.00; выходные: 12.00 - 06.00" },
                     { 2, "ул. Малышева, 21/4", "https://nelsonsauvin.ru/#menu", "Нельсон Совин", "https://img.restoclub.ru/uploads/place/9/6/4/e/964e95990e6af781ce000062ba85b374_w426_h278.jpg", 0, "https://nelsonsauvin.ru/", "будни: 14.00 - 00.00; выходные: 14.00 - 02.00" },
                     { 3, "ул. Хохрякова, 3а", "https://tomesto.ru/ekaterinburg/places/besy", "Бесы", "https://scdn.tomesto.ru/img/place/000/030/109/gastrobar-besy-na-ulitse-hohryakova_df0cf_full-272101.jpg", 0, "https://tomesto.ru/ekaterinburg/places/besy", "будни: 12.00 - 00.00; выходные: 12.00 - 02.00" },
                     { 4, "ул. Вайнера, 9а", "https://killfish.ru/menu.html", "KILLFISH", "https://img.restoclub.ru/uploads/place/e/b/8/1/eb818ba8605995f2aad10136b0c93eec_w1230_h820--no-cut.webp?v=3", 0, "https://killfish.ru/#", "будни и вс: 14.00 - 02.00; пт-сб: 14.00 - 03.00" },
@@ -32,9 +56,12 @@ namespace API.Entities
 
             migrationBuilder.InsertData(
                 table: "BarTag",
-                columns: new[] { "BarsBarId", "TagsTagId" },
+                columns: new[] { "BarsId", "TagsId" },
                 values: new object[,]
                 {
+                    { 1, 2 },
+                    { 1, 3 },
+                    { 1, 4 },
                     { 2, 5 },
                     { 2, 9 },
                     { 7, 6 },
@@ -44,11 +71,50 @@ namespace API.Entities
                     { 10, 2 },
                     { 11, 2 }
                 });
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_BarTag_Bars_BarsId",
+                table: "BarTag",
+                column: "BarsId",
+                principalTable: "Bars",
+                principalColumn: "BarId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_BarTag_Tags_TagsId",
+                table: "BarTag",
+                column: "TagsId",
+                principalTable: "Tags",
+                principalColumn: "TagId",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_BarTag_Bars_BarsBarId",
+                table: "BarTag");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_BarTag_Tags_TagsTagId",
+                table: "BarTag");
+
+            migrationBuilder.DeleteData(
+                table: "BarTag",
+                keyColumns: new[] { "BarsBarId", "TagsTagId" },
+                keyValues: new object[] { 1, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "BarTag",
+                keyColumns: new[] { "BarsBarId", "TagsTagId" },
+                keyValues: new object[] { 1, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "BarTag",
+                keyColumns: new[] { "BarsBarId", "TagsTagId" },
+                keyValues: new object[] { 1, 4 });
+
             migrationBuilder.DeleteData(
                 table: "BarTag",
                 keyColumns: new[] { "BarsBarId", "TagsTagId" },
@@ -117,6 +183,11 @@ namespace API.Entities
             migrationBuilder.DeleteData(
                 table: "Bars",
                 keyColumn: "BarId",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Bars",
+                keyColumn: "BarId",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
@@ -143,6 +214,47 @@ namespace API.Entities
                 table: "Bars",
                 keyColumn: "BarId",
                 keyValue: 11);
+
+            migrationBuilder.RenameColumn(
+                name: "Id",
+                table: "Users",
+                newName: "BarId");
+
+            migrationBuilder.RenameColumn(
+                name: "TagId",
+                table: "Tags",
+                newName: "BarId");
+
+            migrationBuilder.RenameColumn(
+                name: "TagsTagId",
+                table: "BarTag",
+                newName: "TagsId");
+
+            migrationBuilder.RenameColumn(
+                name: "BarsBarId",
+                table: "BarTag",
+                newName: "BarsId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_BarTag_TagsTagId",
+                table: "BarTag",
+                newName: "IX_BarTag_TagsId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_BarTag_Bars_BarsId",
+                table: "BarTag",
+                column: "BarsId",
+                principalTable: "Bars",
+                principalColumn: "BarId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_BarTag_Tags_TagsId",
+                table: "BarTag",
+                column: "TagsId",
+                principalTable: "Tags",
+                principalColumn: "BarId",
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }

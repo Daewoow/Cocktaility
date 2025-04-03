@@ -5,7 +5,7 @@ namespace API.Models;
 public class Tag
 {
     [Key]
-    public int Id { get; set; }
+    public int TagId { get; set; }
     
     [Required]
     public string Name { get; set; }

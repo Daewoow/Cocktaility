@@ -14,7 +14,7 @@ public class TagViewModel
     {
         return new TagViewModel
         {
-            Id = tag.Id,
+            Id = tag.TagId,
             Name = tag.Name,
         };
     }

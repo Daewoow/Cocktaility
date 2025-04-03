@@ -26,7 +26,7 @@ public class BarViewModel
 
     public BarViewModel(Bar bar)
     {
-        Id = bar.Id;
+        Id = bar.BarId;
         Name = bar.Name;
         Address = bar.Address;
         Photo = bar.Photo;

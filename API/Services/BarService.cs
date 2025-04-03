@@ -15,7 +15,7 @@ public class BarService
     {
         var tagIds = await _context.Tags
             .Where(t => tagNames.Contains(t.Name))
-            .Select(t => t.Id)
+            .Select(t => t.TagId)
             .ToListAsync();
 
         if (tagIds.Count == 0)
@@ -24,11 +24,11 @@ public class BarService
         var bars = await _context.Bars
             .AsNoTracking()
             .Include(x => x.Tags)
-            .Where(b => b.Tags.Any(bt => tagIds.Contains(bt.Id)))
+            .Where(b => b.Tags.Any(bt => tagIds.Contains(bt.TagId)))
             .Select(b => new
             {
                 Bar = b,
-                MatchingTagsCount = b.Tags.Count(bt => tagIds.Contains(bt.Id))
+                MatchingTagsCount = b.Tags.Count(bt => tagIds.Contains(bt.TagId))
             })
             .OrderByDescending(x => x.MatchingTagsCount)
             .ThenBy(x => x.Bar.Name)
@@ -39,7 +39,7 @@ public class BarService
     }
 
     public async Task<Bar?> GetBarById(int id) 
-        => await _context.Bars.FirstOrDefaultAsync(b => b.Id == id);
+        => await _context.Bars.FirstOrDefaultAsync(b => b.BarId == id);
 
     public async Task<IEnumerable<string>> GetAllTags()
     {
