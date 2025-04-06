@@ -10,6 +10,7 @@ public class ApplicationContext : DbContext
     public DbSet<Bar> Bars { get; set; } = null!;
     public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<Favorite> Favorites { get; set; } = null!;
+    public DbSet<QueryMetric> QueryMetrics { get; set; } = null!;
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
@@ -167,5 +168,14 @@ public class ApplicationContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
         modelBuilder.Entity<Favorite>().ToTable("Favorites");
+
+        modelBuilder.Entity<QueryMetric>(entity =>
+        {
+            entity.HasKey(x => x.QueryId);
+            entity.Property(x => x.QueryId).ValueGeneratedOnAdd();
+            entity.Property(x => x.Day).IsRequired();
+            entity.Property(x => x.TagsCount).IsRequired();
+        });
+        modelBuilder.Entity<QueryMetric>().ToTable("QueryMetrics");
     }
 }

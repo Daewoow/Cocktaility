@@ -13,8 +13,15 @@ public class BarService
     // Сортриует 1) по количеству совпавших тегов; 2) по алфавиту по убыванию
     public async Task<List<Bar>> SearchBarsAsync(IEnumerable<string> tagNames)
     {
+        var tagNamesList = tagNames.ToList();
+        _context.QueryMetrics.Add(new QueryMetric
+        {
+            Day = DateTime.Today.ToString("yyyy-MM-dd"),
+            TagsCount = tagNamesList.Count,
+        });
+		await _context.SaveChangesAsync();
         var tagIds = await _context.Tags
-            .Where(t => tagNames.Contains(t.Name))
+            .Where(t => tagNamesList.Contains(t.Name))
             .Select(t => t.TagId)
             .ToListAsync();
 

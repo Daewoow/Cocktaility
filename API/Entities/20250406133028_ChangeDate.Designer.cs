@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Entities
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250403111102_PleaseFix")]
-    partial class PleaseFix
+    [Migration("20250406133028_ChangeDate")]
+    partial class ChangeDate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -241,6 +241,26 @@ namespace API.Entities
                     b.HasIndex("UserId");
 
                     b.ToTable("Favorites", (string)null);
+                });
+
+            modelBuilder.Entity("API.Models.QueryMetric", b =>
+                {
+                    b.Property<int>("QueryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QueryId"));
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("TagsCount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("QueryId");
+
+                    b.ToTable("QueryMetrics", (string)null);
                 });
 
             modelBuilder.Entity("API.Models.Tag", b =>

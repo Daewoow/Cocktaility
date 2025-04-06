@@ -17,7 +17,7 @@ builder.WebHost.UseUrls("http://+:5184");
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login";
+        options.LoginPath = "/login";
         options.ExpireTimeSpan = TimeSpan.FromDays(7);
         options.AccessDeniedPath = "/mainpage";
     });

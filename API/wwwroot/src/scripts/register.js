@@ -1,4 +1,4 @@
-const registerUrl = "/Account/Register";
+const registerUrl = "register";
 console.log("Check");
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {

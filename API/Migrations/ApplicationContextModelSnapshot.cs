@@ -240,6 +240,26 @@ namespace API.Migrations
                     b.ToTable("Favorites", (string)null);
                 });
 
+            modelBuilder.Entity("API.Models.QueryMetric", b =>
+                {
+                    b.Property<int>("QueryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QueryId"));
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("TagsCount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("QueryId");
+
+                    b.ToTable("QueryMetrics", (string)null);
+                });
+
             modelBuilder.Entity("API.Models.Tag", b =>
                 {
                     b.Property<int>("TagId")

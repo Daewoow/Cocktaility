@@ -37,6 +37,22 @@ namespace API.Entities
                 name: "PK_BarTag",
                 table: "BarTag",
                 columns: new[] { "BarsBarId", "TagsTagId" });
+            
+            migrationBuilder.InsertData(
+                table: "Tags",
+                columns: new[] { "TagId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "#красивый_туалет" },
+                    { 2, "#настойки" },
+                    { 3, "#коктейли" },
+                    { 4, "#необычные_названия" },
+                    { 5, "#пиво" },
+                    { 6, "#кальян" },
+                    { 7, "#кинги" },
+                    { 8, "#караоке" },
+                    { 9, "#настолки" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Bars",
@@ -104,6 +120,14 @@ namespace API.Entities
                 table: "Bars",
                 keyColumn: "BarId",
                 keyValue: 1);
+            
+            for (int i = 9; i >= 1; i--)
+            {
+                migrationBuilder.DeleteData(
+                    table: "Tags",
+                    keyColumn: "TagId",
+                    keyValue: i);
+            }
 
             migrationBuilder.RenameTable(
                 name: "BarTag",

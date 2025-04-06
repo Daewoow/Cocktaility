@@ -1,4 +1,4 @@
-const loginUrl = "/Account/Login";
+const loginUrl = "login";
 console.log("Check");
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -25,7 +25,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         .then(data => {
             if (data.success) {
                 console.log('succsess: ', data.success);
-                window.location.href = "/mainpage";
+                window.location.href = "/search";
             } else {
                 errorMessage.textContent = data.message || 'Ошибка авторизации';
                 errorMessage.style.display = 'block';
