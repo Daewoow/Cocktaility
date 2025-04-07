@@ -21,10 +21,7 @@ public class AccountController(ApplicationContext context, PageBuilder builder) 
         {
             Title = "Login",
         }
-        .AddLayout("src/components/mainLayout.html")
-        .AddBody("src/components/login.html")
-        .AddScripts("/src/scripts/login.js")
-        .Build();
+        .LoadEntirePage("src/pages/sign.html");
         return Content(page, "text/html");
     }
 
@@ -61,10 +58,7 @@ public class AccountController(ApplicationContext context, PageBuilder builder) 
             {
                 Title = "Register",
             }
-            .AddLayout("src/components/mainLayout.html")
-            .AddBody("src/components/register.html")
-            .AddScripts("/src/scripts/register.js")
-            .Build();
+            .LoadEntirePage("src/pages/register.html");
         return Content(page, "text/html");
     }
     

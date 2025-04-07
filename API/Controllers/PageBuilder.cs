@@ -45,6 +45,15 @@ public class PageBuilder
         sections.Add("Scripts", elements);
         return this;
     }
+    
+    public PageBuilder AddStyles(params string[] paths)
+    {
+        if (paths.Length == 0)
+            return this;
+        var elements = string.Join("\n", paths.Select(f => $"<link rel='stylesheet' href='{f}'></link>"));
+        sections.Add("Styles", elements);
+        return this;
+    }
 
     public string LoadEntirePage(string path)
     {

@@ -2,9 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Коктейлити</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles/style.css">
+    <link rel="stylesheet" href="/src/styles/login.css">
 </head>
 <body>
+<div class="login-wrapper">
+    <!-- Логотип -->
+    <div class="logo">
+        <img src="/public/images/logo.png" alt="Логотип">
+    </div>
 
+    <!-- Форма авторизации -->
+    <div class="login-container">
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="username" name="username" placeholder="Логин" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Пароль" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="repeat-password" name="repeat-password" placeholder="Пароль ещё раз" required>
+            </div>
+            <button class="btn" type="submit">Зарегистрироваться</button>
+        </form>
+        <p id="error-message" class="error-message"></p>
+    </div>
+</div>
+
+<script src="/src/scripts/register.js"></script>
 </body>
 </html>

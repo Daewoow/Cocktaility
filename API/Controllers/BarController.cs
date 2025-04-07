@@ -12,8 +12,15 @@ public class BarsController(BarService barService) : ControllerBase
     [HttpGet("search")]
     public async Task<IActionResult> GetBars()
     {
-        var page = new PageBuilder()
-            .LoadEntirePage("src/pages/search.html");
+        var page = new PageBuilder
+        {
+            Title = "Поиск"
+        }
+        .AddLayout("src/components/mainLayout.html")
+        .AddBody("src/components/search.html")
+        .AddStyles("src/styles/search.css", "src/styles/card.css")
+        .AddScripts("src/scripts/search.js")
+        .Build();
         return Content(page, "text/html");
     }
     

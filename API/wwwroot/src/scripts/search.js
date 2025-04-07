@@ -2,6 +2,7 @@
 
 let allTags;
 let selectedTags = [];
+let cardsData = [];
 
 allTags = ["хуй", "пизда"]
 fetch("/tags")
@@ -13,19 +14,27 @@ const searchInput = document.getElementById("search-input");
 const autocompleteList = document.getElementById("autocomplete-list");
 const selectedTagList = document.getElementById("selected-tag-list");
 const searchResults = document.getElementById("search-results");
-const submitButton = document.querySelector("button");
+const submitButton = document.querySelector("button[type=\"submit\"]");
+const detailsPanel = document.getElementById('detailsPanel');
+const closeBtn = document.getElementById('closeBtn');
+const mainContainer = document.querySelector('.main-container');
+const inputGroup = document.querySelector(".input-group");
+
+
+
 function addTag(tag){
     if (!selectedTags.includes(tag)){
         selectedTags.push(tag);
+        createTag(tag);
     }
-    selectedTagList.innerHTML = '';
-    selectedTags.forEach(tag => {
-        const itemElement = document.createElement('span');
-        itemElement.classList.add('selected-tag');
-        itemElement.textContent = tag;
-        console.log(selectedTagList);
-        selectedTagList.appendChild(itemElement);
-    });
+    // selectedTagList.innerHTML = '';
+    // selectedTags.forEach(tag => {
+    //     const itemElement = document.createElement('span');
+    //     itemElement.classList.add('selected-tag');
+    //     itemElement.textContent = tag;
+    //     console.log(selectedTagList);
+    //     selectedTagList.appendChild(itemElement);
+    // });
 
 }
 searchInput.addEventListener("input", function(event) {
@@ -62,6 +71,16 @@ document.addEventListener('click', function(e) {
     if (e.target.id !== 'search-input') {
         autocompleteList.innerHTML = '';
     }
+    const cardElement = e.target.closest('.venue-card');
+
+    if (cardElement) {
+        // Клик по карточке - показываем детали
+        detailsPanel.classList.add('active');
+        // Здесь можно добавить код для заполнения detailsPanel данными карточки
+    } else if (!detailsPanel.contains(e.target)) {
+        // Клик вне карточки и вне панели деталей - скрываем панель
+        detailsPanel.classList.remove('active');
+    }
 });
 
 submitButton.addEventListener('click', function(event) {
@@ -81,6 +100,7 @@ submitButton.addEventListener('click', function(event) {
         })
         .then(data => {
             // 4. Обрабатываем полученные результаты
+            cardsData = data;
             displaySearchResults(data); // Ваша функция для отображения результатов
         })
         .catch(error => {
@@ -88,6 +108,10 @@ submitButton.addEventListener('click', function(event) {
             // Можно показать сообщение об ошибке пользователю
         });
 
+});
+
+closeBtn.addEventListener('click', () => {
+    detailsPanel.classList.remove('active');
 });
 
 function displaySearchResults(data){
@@ -99,7 +123,7 @@ function displaySearchResults(data){
             tagsElement += `<span class="tag">#${tag['name']}</span>`;
         }
         let card = `
-            <div class="venue-card" style="background-color: ${getPastelColor()}">
+            <div class="venue-card" style="background-color: ${getPastelColor()}" data-id="${bar['id']}">
               <div class="venue-image">
                 <img src="${bar['photo']}" alt="Фото заведения">
               </div>
@@ -121,11 +145,45 @@ function displaySearchResults(data){
             </div>`;
         searchResults.insertAdjacentHTML('beforeend', card);
     }
+
+    const cards = document.querySelectorAll('.venue-card');
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            const cardId = Number(this.getAttribute('data-id'));
+            detailsPanel.classList.add('active');
+            const bar = cardsData.find(card => card['id'] === cardId);
+            if (bar){
+                detailsPanel.querySelector('#detailsContent').innerHTML = `
+                <h2>${bar['name']}</h2>`;
+            }
+        });
+    });
 }
 
 function getPastelColor() {
     const hue = Math.floor(Math.random() * 360);
     return `hsl(${hue}, 70%, 85%)`;
+}
+
+
+function createTag(tagText) {
+    const tag = document.createElement('div');
+    tag.className = 'search-tag';
+    tag.innerText = tagText;
+
+    const removeBtn = document.createElement('span');
+    removeBtn.className = 'remove-tag';
+    removeBtn.innerText = '×';
+    removeBtn.onclick = () => {
+        tag.remove();
+        let index = selectedTags.indexOf(tagText);
+        if (index !== -1) {
+            selectedTags.splice(index, 1);
+        }
+    };
+
+    tag.appendChild(removeBtn);
+    inputGroup.insertBefore(tag, searchInput);
 }
 
 
