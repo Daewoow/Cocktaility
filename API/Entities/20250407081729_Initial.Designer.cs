@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Entities
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250406133028_ChangeDate")]
-    partial class ChangeDate
+    [Migration("20250407081729_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -278,6 +278,53 @@ namespace API.Entities
                     b.HasKey("TagId");
 
                     b.ToTable("Tags", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TagId = 1,
+                            Name = "#красивый_туалет"
+                        },
+                        new
+                        {
+                            TagId = 2,
+                            Name = "#настойки"
+                        },
+                        new
+                        {
+                            TagId = 3,
+                            Name = "#коктейли"
+                        },
+                        new
+                        {
+                            TagId = 4,
+                            Name = "#необычные_названия"
+                        },
+                        new
+                        {
+                            TagId = 5,
+                            Name = "#пиво"
+                        },
+                        new
+                        {
+                            TagId = 6,
+                            Name = "#кальян"
+                        },
+                        new
+                        {
+                            TagId = 7,
+                            Name = "#книги"
+                        },
+                        new
+                        {
+                            TagId = 8,
+                            Name = "#караоке"
+                        },
+                        new
+                        {
+                            TagId = 9,
+                            Name = "#настолки"
+                        });
                 });
 
             modelBuilder.Entity("BarTag", b =>

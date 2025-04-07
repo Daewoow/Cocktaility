@@ -134,6 +134,19 @@ public class ApplicationContext : DbContext
             entity.Property(x => x.TagId).ValueGeneratedOnAdd();
             entity.Property(x => x.Name).IsRequired();
         });
+        
+        modelBuilder.Entity<Tag>().HasData(
+            new Tag { TagId = 1, Name = "#красивый_туалет" },
+            new Tag { TagId = 2, Name = "#настойки" },
+            new Tag { TagId = 3, Name = "#коктейли" },
+            new Tag { TagId = 4, Name = "#необычные_названия" },
+            new Tag { TagId = 5, Name = "#пиво" },
+            new Tag { TagId = 6, Name = "#кальян" },
+            new Tag { TagId = 7, Name = "#книги" },
+            new Tag { TagId = 8, Name = "#караоке" },
+            new Tag { TagId = 9, Name = "#настолки" }
+        );
+        
         modelBuilder.Entity<Tag>().ToTable("Tags");
         
         modelBuilder.Entity<Bar>()

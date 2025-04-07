@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace API.Migrations
+namespace API.Entities
 {
     [DbContext(typeof(ApplicationContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot
@@ -275,6 +275,53 @@ namespace API.Migrations
                     b.HasKey("TagId");
 
                     b.ToTable("Tags", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TagId = 1,
+                            Name = "#красивый_туалет"
+                        },
+                        new
+                        {
+                            TagId = 2,
+                            Name = "#настойки"
+                        },
+                        new
+                        {
+                            TagId = 3,
+                            Name = "#коктейли"
+                        },
+                        new
+                        {
+                            TagId = 4,
+                            Name = "#необычные_названия"
+                        },
+                        new
+                        {
+                            TagId = 5,
+                            Name = "#пиво"
+                        },
+                        new
+                        {
+                            TagId = 6,
+                            Name = "#кальян"
+                        },
+                        new
+                        {
+                            TagId = 7,
+                            Name = "#книги"
+                        },
+                        new
+                        {
+                            TagId = 8,
+                            Name = "#караоке"
+                        },
+                        new
+                        {
+                            TagId = 9,
+                            Name = "#настолки"
+                        });
                 });
 
             modelBuilder.Entity("BarTag", b =>

@@ -5,10 +5,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace API.Migrations
+namespace API.Entities
 {
     /// <inheritdoc />
-    public partial class ManyChanges : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace API.Migrations
                 name: "Bars",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    BarId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
@@ -29,20 +29,34 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bars", x => x.Id);
+                    table.PrimaryKey("PK_Bars", x => x.BarId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QueryMetrics",
+                columns: table => new
+                {
+                    QueryId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Day = table.Column<string>(type: "text", nullable: false),
+                    TagsCount = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QueryMetrics", x => x.QueryId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tags",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    TagId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.PrimaryKey("PK_Tags", x => x.TagId);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,23 +77,23 @@ namespace API.Migrations
                 name: "BarTag",
                 columns: table => new
                 {
-                    BarsId = table.Column<int>(type: "integer", nullable: false),
-                    TagsId = table.Column<int>(type: "integer", nullable: false)
+                    BarsBarId = table.Column<int>(type: "integer", nullable: false),
+                    TagsTagId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BarTag", x => new { x.BarsId, x.TagsId });
+                    table.PrimaryKey("PK_BarTag", x => new { x.BarsBarId, x.TagsTagId });
                     table.ForeignKey(
-                        name: "FK_BarTag_Bars_BarsId",
-                        column: x => x.BarsId,
+                        name: "FK_BarTag_Bars_BarsBarId",
+                        column: x => x.BarsBarId,
                         principalTable: "Bars",
                         principalColumn: "BarId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BarTag_Tags_TagsId",
-                        column: x => x.TagsId,
+                        name: "FK_BarTag_Tags_TagsTagId",
+                        column: x => x.TagsTagId,
                         principalTable: "Tags",
-                        principalColumn: "BarId",
+                        principalColumn: "TagId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -105,7 +119,7 @@ namespace API.Migrations
                         name: "FK_Favorites_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "BarId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -130,17 +144,42 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tags",
-                columns: new[] { "BarId", "Name" },
+                columns: new[] { "TagId", "Name" },
                 values: new object[,]
                 {
-                    { 1, "веселый" },
-                    { 2, "есть туалет" }
+                    { 1, "#красивый_туалет" },
+                    { 2, "#настойки" },
+                    { 3, "#коктейли" },
+                    { 4, "#необычные_названия" },
+                    { 5, "#пиво" },
+                    { 6, "#кальян" },
+                    { 7, "#книги" },
+                    { 8, "#караоке" },
+                    { 9, "#настолки" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BarTag",
+                columns: new[] { "BarsBarId", "TagsTagId" },
+                values: new object[,]
+                {
+                    { 1, 2 },
+                    { 1, 3 },
+                    { 1, 4 },
+                    { 2, 5 },
+                    { 2, 9 },
+                    { 7, 6 },
+                    { 7, 7 },
+                    { 8, 8 },
+                    { 9, 2 },
+                    { 10, 2 },
+                    { 11, 2 }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BarTag_TagsId",
+                name: "IX_BarTag_TagsTagId",
                 table: "BarTag",
-                column: "TagsId");
+                column: "TagsTagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Favorites_BarId",
@@ -161,6 +200,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Favorites");
+
+            migrationBuilder.DropTable(
+                name: "QueryMetrics");
 
             migrationBuilder.DropTable(
                 name: "Tags");
