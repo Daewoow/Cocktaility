@@ -11,6 +11,7 @@ public class ApplicationContext : DbContext
     public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<Favorite> Favorites { get; set; } = null!;
     public DbSet<QueryMetric> QueryMetrics { get; set; } = null!;
+    public DbSet<FavoriteMetric> FavoriteMetrics { get; set; } = null!;
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
@@ -190,5 +191,14 @@ public class ApplicationContext : DbContext
             entity.Property(x => x.TagsCount).IsRequired();
         });
         modelBuilder.Entity<QueryMetric>().ToTable("QueryMetrics");
+
+        modelBuilder.Entity<FavoriteMetric>(entity =>
+        {
+            entity.HasKey(x => x.FavoriteQueryId);
+            entity.Property(x => x.FavoriteQueryId).ValueGeneratedOnAdd();
+            entity.Property(x => x.UserId).IsRequired();
+            entity.Property(x => x.BarId).IsRequired();
+        });
+        modelBuilder.Entity<FavoriteMetric>().ToTable("FavoriteMetrics");
     }
 }

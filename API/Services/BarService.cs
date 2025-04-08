@@ -70,6 +70,13 @@ public class BarService
 
     public async Task<bool> AddToFavorites(string userId, int barId)
     {
+        _context.FavoriteMetrics.Add(new FavoriteMetric
+        {
+            UserId = userId,
+            BarId = barId,
+        });
+        await _context.SaveChangesAsync();
+        
         var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
         if (user == null)
         {
