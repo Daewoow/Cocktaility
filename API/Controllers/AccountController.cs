@@ -34,6 +34,7 @@ public class AccountController(ApplicationContext context, PageBuilder builder) 
         
         var claims = new List<Claim>
         {
+            new (ClaimTypes.NameIdentifier, user.Id),
             new (ClaimTypes.Name, request.Email),
             new (ClaimTypes.Role, user.IsAdmin ? "Admin" : "User" ) // тут равно =
         };

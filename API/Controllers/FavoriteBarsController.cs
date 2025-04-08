@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using API.Models;
 
@@ -12,7 +13,7 @@ public class FavoriteBarsController(BarService barService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Bar>>> GetAllBars()
     {
-        var userId = User.Identity.Name;
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         try
         {
@@ -28,7 +29,7 @@ public class FavoriteBarsController(BarService barService) : ControllerBase
     [HttpPost("{barId}")]
     public async Task<IActionResult> AddToFavorites(int barId)
     {
-        var userId = User.Identity.Name;
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         try
         {
@@ -46,7 +47,7 @@ public class FavoriteBarsController(BarService barService) : ControllerBase
     [HttpDelete("{barId}")]
     public async Task<IActionResult> RemoveFromFavorites(int barId)
     {
-        var userId = User.Identity.Name;
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         try
         {
