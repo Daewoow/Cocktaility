@@ -13,8 +13,6 @@ deploy_to_vm-job:
   stage: deploy
   only:
     - main
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'main'
   script:
     - echo "Deploying to VM..."
     - ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP "cd /home/wehavetwochairs/Repositories/Cocktaility && ./deploy.sh"
