@@ -1,5 +1,6 @@
 set -e 
 
+
 docker compose down || true
 git pull origin main
 
