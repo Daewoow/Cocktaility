@@ -20,5 +20,5 @@ deploy_to_vm-job:
     - ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - echo "Deploying to VM..."
+    - echo "Deploying to VM... "
     - ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP "cd /home/wehavetwochairs/Repositories/Cocktaility && ./deploy.sh"
