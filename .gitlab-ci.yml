@@ -1,6 +1,5 @@
 stages:
   - pre-check
-  - build
   - deploy
 
 mr-dummy:
@@ -9,28 +8,13 @@ mr-dummy:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   script:
     - echo "Dummy job for merge request checks"
-
-build-job:
-  stage: build
-  image: docker:24.0
-  services:
-    - docker:dind
+    
+deploy_to_vm-job:
+  stage: deploy
+  only:
+    - main
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
   script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    - docker compose build
-    - docker compose push
-
-deploy-job:
-  stage: deploy
-  image: alpine
-  needs: ["build-job"]
-  before_script:
-    - apk add --no-cache openssh-client docker-cli-compose
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'main'  
-  script:
-    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP "echo \"$CI_REGISTRY_PASSWORD\" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY"
-    - scp -o StrictHostKeyChecking=no docker-compose.yml $SSH_USER@$SERVER_IP:/app/
-    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP "cd /app && docker compose pull && docker compose up -d --remove-orphans"
+    - echo "Deploying to VM..."
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP "cd /home/wehavetwochairs/Repositories/Cocktaility && ./deploy.sh"
