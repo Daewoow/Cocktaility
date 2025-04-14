@@ -10,7 +10,7 @@ mr-dummy:
   script:
     - echo "Dummy job for merge request checks"
 
-build:
+build-job:
   stage: build
   image: docker:24.0
   services:
@@ -22,7 +22,7 @@ build:
     - docker compose build
     - docker compose push
 
-deploy:
+deploy-job:
   stage: deploy
   image: alpine
   needs: ["build"]
