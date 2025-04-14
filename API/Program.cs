@@ -58,7 +58,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// траляляля
+// троляля
 PageBuilder.SetRoot(app.Environment.WebRootPath);
 
 app.MapGet("/users", [Authorize(Roles = "Admin")]async (ApplicationContext db) => await db.Users.ToListAsync());
