@@ -19,8 +19,7 @@ public class PageBuilder
     {
         PageBuilder.root = root;
     }
-
-
+    
     public PageBuilder AddLayout(string path)
     {
         var finalPath = Path.Combine(root, path);
