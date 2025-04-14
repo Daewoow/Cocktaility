@@ -61,6 +61,7 @@ app.MapControllers();
 // ляляля
 PageBuilder.SetRoot(app.Environment.WebRootPath);
 
+
 app.MapGet("/users", [Authorize(Roles = "Admin")]async (ApplicationContext db) => await db.Users.ToListAsync());
 app.MapGet("/user/{id:int}", [Authorize]async (int id, ApplicationContext db) =>
     await db.Users.FirstOrDefaultAsync(x => x.Id == id.ToString())); // TODO: id теперь Guid
