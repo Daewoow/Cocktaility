@@ -102,29 +102,7 @@ input::placeholder {
     /*min-height: 100vh;*/
 }
 
-.details-panel {
-    position: relative;
-    width: 350px;
-    margin-left: -350px;
-    overflow: auto;
-    transition: margin-left 0.3s ease;
-    background: #fff;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    height: 100vh;
-}
 
-.details-content {
-    flex: 1; /* Занимает всё доступное пространство */
-    overflow-y: auto; /* Включаем вертикальный скролл */
-    /* Убираем верхний отступ, так как кнопка sticky */
-    padding: 0 20px 20px;
-    /*margin-top: -40px; !* Компенсируем sticky кнопку *!*/
-}
-
-.details-panel.active {
-    /*width: 350px; !* Ширина открытой панели *!*/
-    margin-left: 0;
-}
 
 .main-container {
     padding: 20px;
@@ -134,22 +112,6 @@ input::placeholder {
     /*max-height: calc(100vh - 60px);*/
 
 }
-
-.details-panel.active ~ .main-content {
-    margin-left: 20px; /* Отступ при открытой панели */
-}
-
-.close-btn {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-
 
 
 .search-tag {

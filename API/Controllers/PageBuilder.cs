@@ -11,9 +11,10 @@ public class PageBuilder
 {
     private string layout;
     private Dictionary<string, string> sections = new();
-    
+
     private static string? root;
     public string Title { get; init; } = "ХУЙ";
+    public bool IsAuthenticated { get; init; } = false;
 
     public static void SetRoot(string root)
     {
@@ -36,12 +37,21 @@ public class PageBuilder
         return this;
     }
 
-    public PageBuilder AddScripts(params string[] paths)
+    public PageBuilder AddScripts( bool head = false, params string[] paths)
     {
         if (paths.Length == 0)
             return this;
-        var elements = string.Join("\n", paths.Select(f => $"<script type='text/javascript' src='{f}'></script>"));
-        sections.Add("Scripts", elements);
+        if (!head)
+        {        
+            var elements = string.Join("\n", paths.Select(f => $"<script type='text/javascript' src='{f}'></script>"));
+            sections.Add("Scripts", elements);
+        }
+        else
+        {
+            var elements = string.Join("\n", paths.Select(f => $"<script src='{f}'></script>"));
+
+            sections.Add("HeadScripts", elements);
+        }
         return this;
     }
     
@@ -62,6 +72,10 @@ public class PageBuilder
 
     public string Build()
     {
+        // First handle conditional blocks
+        layout = ProcessConditionalBlocks(layout);
+        
+        // Then handle regular sections
         var pattern = @"(@[a-zA-Zа-яА-Я]+\b)";
         string result = Regex.Replace(layout, pattern, match =>
         {
@@ -70,6 +84,20 @@ public class PageBuilder
                 return "";
             return sections[word[1..]];
         });
+        
         return result;
+    }
+    
+    private string ProcessConditionalBlocks(string content)
+    {
+        // Process @if(auth) blocks
+        var ifAuthPattern = @"@if\s*\(\s*auth\s*\)\s*\{(.*?)\}\s*(?:@else\s*\{(.*?)\})?";
+        return Regex.Replace(content, ifAuthPattern, match =>
+        {
+            var ifBlock = match.Groups[1].Value;
+            var elseBlock = match.Groups.Count > 2 ? match.Groups[2].Value : string.Empty;
+            
+            return IsAuthenticated ? ifBlock : elseBlock;
+        }, RegexOptions.Singleline);
     }
 }

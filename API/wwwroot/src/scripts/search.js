@@ -3,6 +3,8 @@
 let allTags;
 let selectedTags = [];
 let cardsData = [];
+let cardFavoriteButtons = [];
+let detailsFavoriteButton;
 
 allTags = ["хуй", "пизда"]
 fetch("/tags")
@@ -37,18 +39,21 @@ function addTag(tag){
     // });
 
 }
-searchInput.addEventListener("input", function(event) {
-    const inputText = this.value.toLowerCase();
+
+function updateSearch(searchQuery){
     autocompleteList.innerHTML = '';
 
-    if (!inputText) {
-        return;
-    }
-
+    let filteredData;
     // Фильтрация данных
-    const filteredData = allTags.filter(item =>
-        item.toLowerCase().includes(inputText)
-    );
+    if (searchQuery.length > 0){
+
+        filteredData = allTags.filter(item =>
+            item.toLowerCase().includes(searchQuery)
+        );
+    }
+    else{
+        filteredData = allTags;
+    }
 
     // Отображение подсказок
     filteredData.forEach(item => {
@@ -60,27 +65,86 @@ searchInput.addEventListener("input", function(event) {
         itemElement.addEventListener('click', function() {
             // searchInput.value = item;
             addTag(item);
-            autocompleteList.innerHTML = '';
+            // autocompleteList.innerHTML = '';
         });
 
         autocompleteList.appendChild(itemElement);
     });
+}
+
+function updateFavorite(barId){
+    if (localStorage.getItem(`bar_favorite_${barId}`) === 'false') {
+        fetch(`api/favoriteBars/${barId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                barId: barId}),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Favorite not updated');
+                }
+            });
+        localStorage.setItem(`bar_favorite_${barId}`, 'true');
+    }
+    else if (localStorage.getItem(`bar_favorite_${barId}`) === 'true') {
+        fetch(`api/favoriteBars/${barId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                barId: barId}),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Favorite not updated');
+                }
+            });
+        localStorage.setItem(`bar_favorite_${barId}`, 'false');
+    }
+}
+function updateDetailFavoriteButton(element) {
+    const barId = Number(element.getAttribute('data-id'));
+    if (localStorage.getItem(`bar_favorite_${barId}`) === 'false') {
+        element.classList.remove('fa-solid');
+        element.classList.add('fa-regular');
+    }
+    else if (localStorage.getItem(`bar_favorite_${barId}`) === 'true') {
+        element.classList.remove('fa-regular');
+        element.classList.add('fa-solid');
+    }
+}
+
+searchInput.addEventListener("input", function(event) {
+    const inputText = this.value.toLowerCase();
+    updateSearch(inputText);
+
+});
+
+searchInput.addEventListener("focus", function(event) {
+    const inputText = this.value.toLowerCase();
+    updateSearch(inputText);
 });
 
 document.addEventListener('click', function(e) {
-    if (e.target.id !== 'search-input') {
+    if (e.target.id !== 'search-input' && !e.target.classList.contains('autocomplete-item')) {
         autocompleteList.innerHTML = '';
     }
     const cardElement = e.target.closest('.venue-card');
 
-    if (cardElement) {
+    if (cardElement && !e.target.classList.contains('favorite-button')) {
         // Клик по карточке - показываем детали
+        console.log(e);
         detailsPanel.classList.add('active');
         // Здесь можно добавить код для заполнения detailsPanel данными карточки
-    } else if (!detailsPanel.contains(e.target)) {
-        // Клик вне карточки и вне панели деталей - скрываем панель
-        detailsPanel.classList.remove('active');
     }
+    // else if (!detailsPanel.contains(e.target)) {
+    //     // Клик вне карточки и вне панели деталей - скрываем панель
+    //     detailsPanel.classList.remove('active');
+    // }
 });
 
 submitButton.addEventListener('click', function(event) {
@@ -120,42 +184,93 @@ function displaySearchResults(data){
     for (const bar of data){
         let tagsElement = "";
         for (let tag of bar['tags']){
-            tagsElement += `<span class="tag">#${tag['name']}</span>`;
+            tagsElement += `<span class="tag">${tag['name']}</span>`;
         }
-        let card = `
+        let favoriteTag = localStorage.getItem(`bar_favorite_${bar['id']}`) === "true" ? "fa-solid" : "fa-regular";
+        const card = `
             <div class="venue-card" style="background-color: ${getPastelColor()}" data-id="${bar['id']}">
               <div class="venue-image">
                 <img src="${bar['photo']}" alt="Фото заведения">
               </div>
-
               <div class="venue-info">
-                <div class="venue-tags">
-                  ${tagsElement}
-                </div>
-                <h4 class="venue-name">${bar['name']}</h4>
-
-                <div class="venue-address">
-                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <span>${bar['address']}</span>
+                <div class="venue-tags"> ${tagsElement} </div>
+                <div class="venue-bottom-info">
+                  <div class="name-address">
+                    <h4 class="venue-name">${bar['name']}</h4>
+                    <div class="venue-address">
+                      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                      <span>${bar['address']}</span>
+                    </div>
+                  </div>
+                  <i class="${favoriteTag} fa-bookmark favorite-button" data-id="${bar['id']}"></i>
                 </div>
               </div>
             </div>`;
         searchResults.insertAdjacentHTML('beforeend', card);
     }
-
+    
     const cards = document.querySelectorAll('.venue-card');
     cards.forEach(card => {
-        card.addEventListener('click', function() {
+        card.addEventListener('click', function(event) {
+            if (event.target.closest('.favorite-button')) {
+                return; // Прерываем выполнение, если клик был по кнопке
+            }
             const cardId = Number(this.getAttribute('data-id'));
             detailsPanel.classList.add('active');
             const bar = cardsData.find(card => card['id'] === cardId);
+            
             if (bar){
-                detailsPanel.querySelector('#detailsContent').innerHTML = `
-                <h2>${bar['name']}</h2>`;
+                let tagsElement = "";
+                for (let tag of bar['tags']){
+                    tagsElement += `<span class="tag">${tag['name']}</span>`;
+                }
+                let favoriteTag = localStorage.getItem(`bar_favorite_${bar['id']}`) === "true" ? "fa-solid" : "fa-regular";
+                const info = `
+                <img src="${bar['photo']}" alt="Фото заведения" class="description-image">
+                <div class="tags-favorite">
+                  <div class="details-tags"> ${tagsElement} </div>
+                  <i class="${favoriteTag} fa-bookmark favorite-button" data-id="${bar['id']}"></i>
+                </div>
+                <div class="venue-info">
+                  <div class="name-address">
+                    <h2 class=" venue-name details-name">${bar['name']}</h2>
+                    <div class="venue-address">
+                      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                      <span>${bar['address']}</span>
+                    </div>
+                  </div>
+                  <div class="work-time">
+                    <h4>Время работы</h4>
+                    <div><span>${bar['timeOfWork']}</span></div>
+                  </div>
+                </div>
+                `;
+                let detailsContent = detailsPanel.querySelector('#detailsContent');
+                detailsContent.innerHTML = info;
+                detailsPanel.style.backgroundColor = this.style.backgroundColor
+                detailsPanel.querySelector('.favorite-button').addEventListener('click', function(event){
+                    updateFavorite(Number(this.getAttribute('data-id')));
+                    document
+                    .querySelectorAll('.favorite-button')
+                    .forEach(item => updateDetailFavoriteButton(item));
+                    }
+                );
             }
+        });
+    });
+
+    document.querySelectorAll('.favorite-button').forEach(item => {
+        item.addEventListener('click', function(event){
+            updateFavorite(Number(this.getAttribute('data-id')));
+            document
+            .querySelectorAll('.favorite-button')
+            .forEach(item => updateDetailFavoriteButton(item));
         });
     });
 }

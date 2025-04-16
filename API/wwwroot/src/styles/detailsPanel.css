@@ -1,0 +1,69 @@
+﻿.details-panel {
+    position: relative;
+    width: 500px;
+    margin-left: -500px;
+    overflow: auto;
+    transition: margin-left 0.3s ease;
+    background: #fff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    height: 100vh;
+}
+
+.details-content {
+    flex: 1; /* Занимает всё доступное пространство */
+    overflow-y: auto; /* Включаем вертикальный скролл */
+    /* Убираем верхний отступ, так как кнопка sticky */
+    padding: 0 20px 20px;
+    /*margin-top: -40px; !* Компенсируем sticky кнопку *!*/
+}
+
+.details-panel.active {
+    /*width: 350px; !* Ширина открытой панели *!*/
+    margin-left: 0;
+}
+
+.details-panel.active ~ .main-content {
+    margin-left: 20px; /* Отступ при открытой панели */
+}
+
+.close-btn {
+    position: absolute;
+    right: 7px;
+    top: 4px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.description-image{
+    width: 100%;
+    height: 250px;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.tags-favorite {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-tags {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.favorite-button {
+    display: flex;
+}
+
+.venue-name.details-name {
+    font-size: 24px;
+}
+
+
+

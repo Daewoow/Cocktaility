@@ -14,12 +14,24 @@ public class BarsController(BarService barService) : ControllerBase
     {
         var page = new PageBuilder
         {
-            Title = "Поиск"
+            Title = "Поиск",
+            IsAuthenticated = User.Identity is { IsAuthenticated: true },
         }
         .AddLayout("src/components/mainLayout.html")
         .AddBody("src/components/search.html")
-        .AddStyles("src/styles/search.css", "src/styles/card.css")
-        .AddScripts("src/scripts/search.js")
+        .AddStyles("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+            "src/styles/search.css", 
+            "src/styles/card.css",
+            "src/styles/detailsPanel.css"
+            )
+        .AddScripts(false,
+            "src/scripts/search.js",
+            "src/scripts/search_ymaps.js",
+            "https://api-maps.yandex.ru/2.1/?apikey=c34675db-5522-4f61-b4ee-9eda5adca08e&lang=ru_RU"
+            )
+        // .AddScripts(true,
+        //     "https://api-maps.yandex.ru/v2.1/?apikey=c34675db-5522-4f61-b4ee-9eda5adca08e&lang=ru_RU\""
+        //     )
         .Build();
         return Content(page, "text/html");
     }
@@ -33,8 +45,12 @@ public class BarsController(BarService barService) : ControllerBase
         }
 
         var bars = await barService.SearchBarsAsync(request.Tags);
-
-        return Ok(bars.Select(b => new BarViewModel(b)));
+        var barsViewModels = bars.Select(b =>
+        {
+            var barViewModel = new BarViewModel(b);
+            return barViewModel;
+        });
+        return Ok(barsViewModels);
     }
 
     [HttpGet("/bars/{id:int}")]

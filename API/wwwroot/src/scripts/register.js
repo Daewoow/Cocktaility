@@ -1,5 +1,5 @@
 const registerUrl = "register";
-console.log("Crack");
+console.log("Crick");
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
