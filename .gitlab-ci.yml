@@ -1,0 +1,24 @@
+stages:
+  - pre-check
+  - deploy
+
+mr-dummy:
+  stage: pre-check
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  script:
+    - echo "Dummy job for merge request checks"
+    
+deploy_to_vm-job:
+  stage: deploy
+  only:
+    - main
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "Deploying to VM... "
+    - ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP "cd /home/wehavetwochairs/Repositories/Cocktaility && ./deploy.sh"

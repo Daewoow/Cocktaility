@@ -19,7 +19,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/login";
         options.ExpireTimeSpan = TimeSpan.FromDays(7);
-        options.AccessDeniedPath = "/mainpage";
+        options.AccessDeniedPath = "/search";
     });
 builder.Services.AddAuthorization(options =>
 {
@@ -58,7 +58,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// ляляля
+// троляля
 PageBuilder.SetRoot(app.Environment.WebRootPath);
 
 app.MapGet("/users", [Authorize(Roles = "Admin")]async (ApplicationContext db) => await db.Users.ToListAsync());
@@ -69,5 +69,6 @@ app.MapGet("/mainpage", context =>
     context.Response.Redirect("/src/pages/index.html");
     return Task.CompletedTask;
 });
+app.MapGet("/", () => Results.Redirect("/search"));
 
 app.Run();
