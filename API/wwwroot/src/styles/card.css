@@ -59,3 +59,13 @@
     font-style: italic;
     font-weight: 300;
 }
+
+.venue-bottom-info{
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 1;
+}
+
+.favorite-button:hover {
+    cursor: pointer;
+}

@@ -22,7 +22,8 @@ public class BarViewModel
     
     public List<TagViewModel> Tags { get;  }
     
-    public List<TagViewModel> FavoritedByUsers { get; set; }
+    public bool IsFavorite { get; set; }
+    
 
     public BarViewModel(Bar bar)
     {

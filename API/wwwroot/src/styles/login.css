@@ -74,7 +74,7 @@ input::placeholder {
     color: #00000099;
 }
 
-button{
+.login-btn {
     /*width: 100%;*/
     padding: 15px 20px;
     background-color: #CBBAED;
@@ -86,7 +86,7 @@ button{
     margin-top: 10px;
 }
 
-button:hover {
+.login-btn:hover {
     background-color: #AC97D5;
     /*color: #CBBAED;*/
 }
