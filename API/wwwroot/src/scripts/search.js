@@ -108,11 +108,12 @@ function updateFavorite(barId){
 }
 function updateDetailFavoriteButton(element) {
     const barId = Number(element.getAttribute('data-id'));
-    if (localStorage.getItem(`bar_favorite_${barId}`) === 'false') {
+    const bibika = localStorage.getItem(`bar_favorite_${barId}`);
+    if (bibika === 'false') {
         element.classList.remove('fa-solid');
         element.classList.add('fa-regular');
     }
-    else if (localStorage.getItem(`bar_favorite_${barId}`) === 'true') {
+    else if (bibika === 'true') {
         element.classList.remove('fa-regular');
         element.classList.add('fa-solid');
     }
@@ -210,6 +211,10 @@ function displaySearchResults(data){
               </div>
             </div>`;
         searchResults.insertAdjacentHTML('beforeend', card);
+        const bibika = localStorage.getItem(`bar_favorite_${bar['id']}`);
+        if (bibika === null) {
+            localStorage.setItem(`bar_favorite_${bar['id']}`, `false`);
+        }
     }
     
     const cards = document.querySelectorAll('.venue-card');
