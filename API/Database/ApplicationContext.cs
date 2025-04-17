@@ -155,6 +155,7 @@ public class ApplicationContext : DbContext
             .WithMany(t => t.Bars)
             .UsingEntity(j => j.HasData(
                 new {BarsBarId = 1, TagsTagId = 2},
+                new {BarsBarId = 1, TagsTagId = 1},
                 new {BarsBarId = 1, TagsTagId = 3},
                 new {BarsBarId = 1, TagsTagId = 4},
                 new {BarsBarId = 2, TagsTagId = 5},
@@ -164,7 +165,8 @@ public class ApplicationContext : DbContext
                 new {BarsBarId = 8, TagsTagId = 8},
                 new {BarsBarId = 9, TagsTagId = 2},
                 new {BarsBarId = 10, TagsTagId = 2},
-                new {BarsBarId = 11, TagsTagId = 2})
+                new {BarsBarId = 11, TagsTagId = 2},
+                new {BarsBarId = 12, TagsTagId = 1})
             );
         
         modelBuilder.Entity<Favorite>(entity =>
