@@ -216,7 +216,7 @@ function displaySearchResults(data){
             localStorage.setItem(`bar_favorite_${bar['id']}`, `false`);
         }
     }
-    
+
     const cards = document.querySelectorAll('.venue-card');
     cards.forEach(card => {
         card.addEventListener('click', function(event) {
@@ -226,7 +226,7 @@ function displaySearchResults(data){
             const cardId = Number(this.getAttribute('data-id'));
             detailsPanel.classList.add('active');
             const bar = cardsData.find(card => card['id'] === cardId);
-            
+
             if (bar){
                 let tagsElement = "";
                 for (let tag of bar['tags']){
@@ -260,10 +260,10 @@ function displaySearchResults(data){
                 detailsContent.innerHTML = info;
                 detailsPanel.style.backgroundColor = this.style.backgroundColor
                 detailsPanel.querySelector('.favorite-button').addEventListener('click', function(event){
-                    updateFavorite(Number(this.getAttribute('data-id')));
-                    document
-                    .querySelectorAll('.favorite-button')
-                    .forEach(item => updateDetailFavoriteButton(item));
+                        updateFavorite(Number(this.getAttribute('data-id')));
+                        document
+                            .querySelectorAll('.favorite-button')
+                            .forEach(item => updateDetailFavoriteButton(item));
                     }
                 );
             }
@@ -274,8 +274,8 @@ function displaySearchResults(data){
         item.addEventListener('click', function(event){
             updateFavorite(Number(this.getAttribute('data-id')));
             document
-            .querySelectorAll('.favorite-button')
-            .forEach(item => updateDetailFavoriteButton(item));
+                .querySelectorAll('.favorite-button')
+                .forEach(item => updateDetailFavoriteButton(item));
         });
     });
 }
@@ -305,7 +305,3 @@ function createTag(tagText) {
     tag.appendChild(removeBtn);
     inputGroup.insertBefore(tag, searchInput);
 }
-
-
-
-
