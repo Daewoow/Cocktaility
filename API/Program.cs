@@ -1,13 +1,8 @@
-using System.Net.Quic;
 using API.Controllers;
-using API.Models;
-using API.Models;
-using Microsoft.AspNetCore.Authentication;
+using API.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +23,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 
+builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<BarService>();
 builder.Services.AddScoped<PageBuilder>();
 builder.Services.AddScoped<PageBuilder>();

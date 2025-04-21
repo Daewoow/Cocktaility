@@ -2,39 +2,25 @@
 
 namespace API.ViewModels;
 
-public class BarViewModel
+public class BarViewModel(Bar bar)
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = bar.BarId;
 
-    public string Name { get; set; }
-    
-    public string Address { get; set; }
-    
-    public string Photo { get; set; }
-    
-    public string Menu { get; set; }
-    
-    public string Site { get; set; }
-    
-    public int Rating { get; set; }
-    
-    public string TimeOfWork { get; set; }
-    
-    public List<TagViewModel> Tags { get;  }
-    
+    public string Name { get; set; } = bar.Name;
+
+    public string Address { get; set; } = bar.Address;
+
+    public string Photo { get; set; } = bar.Photo;
+
+    public string Menu { get; set; } = bar.Menu;
+
+    public string Site { get; set; } = bar.Site;
+
+    public int Rating { get; set; } = bar.Rating;
+
+    public string TimeOfWork { get; set; } = bar.TimeOfWork;
+
+    public List<TagViewModel> Tags { get;  } = bar.Tags.Select(TagViewModel.CreateWithNoBars).Take(4).ToList(); // Простите --Да норм
+
     public bool IsFavorite { get; set; }
-    
-
-    public BarViewModel(Bar bar)
-    {
-        Id = bar.BarId;
-        Name = bar.Name;
-        Address = bar.Address;
-        Photo = bar.Photo;
-        Menu = bar.Menu;
-        Site = bar.Site;
-        Rating = bar.Rating;
-        TimeOfWork = bar.TimeOfWork;
-        Tags = bar.Tags.Select(TagViewModel.CreateWithNoBars).Take(4).ToList(); // Простите
-    }
 }

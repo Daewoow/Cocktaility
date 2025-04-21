@@ -1,4 +1,5 @@
-﻿using API.Models;
+﻿using API.Controllers;
+using API.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class BarService
@@ -66,6 +67,48 @@ public class BarService
             .ToListAsync();
 
         return favoriteBars;
+    }
+
+    public async Task<bool> AddNewBarAsync(Bar bar)
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            var newBar = new Bar
+            {
+                Address = bar.Address,
+                Menu = bar.Menu,
+                Name = bar.Name,
+                Photo = bar.Photo,
+                Site = bar.Site,
+                TimeOfWork = bar.TimeOfWork,
+            };
+            await _context.Bars.AddAsync(newBar);
+            await _context.SaveChangesAsync();
+
+            if (bar.Tags is not null && bar.Tags.Count != 0)
+            {
+                foreach (var tag in bar.Tags)
+                {
+                    await _context.Database.ExecuteSqlInterpolatedAsync(
+                        $"""
+                         INSERT INTO public."BarTag" ("BarsBarId", "TagsTagId") 
+                                             VALUES ({newBar.BarId}, {tag.TagId})
+                         """);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            Console.WriteLine(ex.Message);
+            return false;
+        }
     }
 
     public async Task<bool> AddToFavorites(string userId, int barId)
