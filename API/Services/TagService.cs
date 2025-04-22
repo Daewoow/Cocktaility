@@ -12,16 +12,15 @@ public class TagService
         _context = context;
     }
 
-    public async Task<bool> AddNewTag(Tag tag)
+    public async Task<bool> AddNewTag(string tagName)
     {
         await using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
         {
-            var name = tag.Name;
-            if (name[0] != '#')
-                name = "#" + tag.Name;
-            var newTag = new Tag { Name = name };
+            if (tagName[0] != '#')
+                tagName = "#" + tagName;
+            var newTag = new Tag { Name = tagName };
             await _context.Tags.AddAsync(newTag);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();

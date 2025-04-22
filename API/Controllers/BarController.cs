@@ -72,13 +72,9 @@ public class BarsController(BarService barService, TagService tagService) : Cont
     }
 
     [HttpPost("tags/newTag")]
-    public async Task<IActionResult> AddNewTag([FromBody] TagViewModel tag)
+    public async Task<IActionResult> AddNewTag([FromBody] string tagName)
     {
-        var result = await tagService.AddNewTag(new Tag
-        {
-            TagId = tag.Id,
-            Name = tag.Name
-        });
+        var result = await tagService.AddNewTag(tagName);
         return result ? Ok() : BadRequest("Bad tag");
     }
     
