@@ -10,5 +10,5 @@ public class Tag
     [Required]
     public string Name { get; set; }
     
-    public ICollection<Bar> Bars { get;}
+    public IEnumerable<Bar> Bars { get; internal set; }
 }

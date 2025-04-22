@@ -1,5 +1,7 @@
-﻿using API.Models;
+﻿using System.Security.Claims;
+using API.Models;
 using API.Requests;
+using API.Services;
 using API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +9,7 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("/")]
-public class BarsController(BarService barService) : ControllerBase
+public class BarsController(BarService barService, TagService tagService) : ControllerBase
 {
     [HttpGet("search")]
     public async Task<IActionResult> GetBars()
@@ -67,5 +69,31 @@ public class BarsController(BarService barService) : ControllerBase
     {
         var tags = await barService.GetAllTags();
         return Ok(tags);
+    }
+
+    [HttpPost("tags/newTag")]
+    public async Task<IActionResult> AddNewTag([FromBody] TagViewModel tag)
+    {
+        var result = await tagService.AddNewTag(new Tag
+        {
+            TagId = tag.Id,
+            Name = tag.Name
+        });
+        return result ? Ok() : BadRequest("Bad tag");
+    }
+    
+    [HttpPost("bars/newBar")]
+    public async Task<IActionResult> AddNewBar([FromBody] BarViewModel newBar)
+    {
+        var result = await barService.AddNewBarAsync((Bar)newBar);
+        return result ? Ok() : BadRequest("Bad bar");
+    }
+    
+    [HttpPost("bars/Favorite")]
+    public async Task<IActionResult> AddFavorite([FromBody] Favorite favorite)
+    {
+        return await barService.AddToFavorites(ClaimTypes.NameIdentifier, favorite.BarId) 
+            ? Ok()
+            : BadRequest("Bad favorite");
     }
 }

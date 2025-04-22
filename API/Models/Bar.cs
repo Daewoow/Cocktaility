@@ -27,7 +27,7 @@ public class Bar
     
     public string TimeOfWork { get; set; }
     
-    public ICollection<Tag> Tags { get;  } = new List<Tag>();
+    public IEnumerable<Tag> Tags { get; internal set; } = new List<Tag>();
     
-    public ICollection<Favorite> FavoritedByUsers { get; set; } = new List<Favorite>();
+    public IEnumerable<Favorite> FavoritedByUsers { get; set; } = new List<Favorite>();
 }

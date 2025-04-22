@@ -86,7 +86,7 @@ public class BarService
             await _context.Bars.AddAsync(newBar);
             await _context.SaveChangesAsync();
 
-            if (bar.Tags is not null && bar.Tags.Count != 0)
+            if (bar.Tags is not null && bar.Tags.Count() != 0)
             {
                 foreach (var tag in bar.Tags)
                 {

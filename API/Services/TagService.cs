@@ -18,7 +18,10 @@ public class TagService
 
         try
         {
-            var newTag = new Tag { Name = tag.Name };
+            var name = tag.Name;
+            if (name[0] != '#')
+                name = "#" + tag.Name;
+            var newTag = new Tag { Name = name };
             await _context.Tags.AddAsync(newTag);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();

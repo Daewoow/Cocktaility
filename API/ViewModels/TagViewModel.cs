@@ -8,7 +8,7 @@ public class TagViewModel
     
     public string Name { get; set; }
     
-    public ICollection<BarViewModel> Bars { get;}
+    public IEnumerable<BarViewModel> Bars { get;}
 
     public static TagViewModel CreateWithNoBars(Tag tag)
     {
@@ -16,6 +16,15 @@ public class TagViewModel
         {
             Id = tag.TagId,
             Name = tag.Name,
+        };
+    }
+
+    public static explicit operator Tag(TagViewModel tag)
+    {
+        return new Tag
+        {
+            Name = tag.Name,
+            Bars = tag.Bars.Select(b => (Bar)b)
         };
     }
 }

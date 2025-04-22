@@ -23,4 +23,20 @@ public class BarViewModel(Bar bar)
     public List<TagViewModel> Tags { get;  } = bar.Tags.Select(TagViewModel.CreateWithNoBars).Take(4).ToList(); // Простите --Да норм
 
     public bool IsFavorite { get; set; }
+
+    public static explicit operator Bar(BarViewModel bar)
+    {
+        return new Bar
+        {
+            Address = bar.Address,
+            Photo = bar.Photo,
+            Menu = bar.Menu,
+            Site = bar.Site,
+            Rating = bar.Rating,
+            TimeOfWork = bar.TimeOfWork,
+            Name = bar.Name,
+            FavoritedByUsers = new List<Favorite>(),
+            Tags = bar.Tags.Select(t => (Tag)t)
+        };
+    }
 }
