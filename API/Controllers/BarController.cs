@@ -29,7 +29,8 @@ public class BarsController(BarService barService, TagService tagService) : Cont
         .AddScripts(false,
 			"https://api-maps.yandex.ru/2.1/?apikey=c34675db-5522-4f61-b4ee-9eda5adca08e&lang=ru_RU",
             "src/scripts/search.js",
-            "src/scripts/search_ymaps.js"
+            "src/scripts/search_ymaps.js",
+            "src/scripts/userActions.js"
             )
         // .AddScripts(true,
         //     "https://api-maps.yandex.ru/v2.1/?apikey=c34675db-5522-4f61-b4ee-9eda5adca08e&lang=ru_RU\""
