@@ -20,6 +20,8 @@ public class TagService
         {
             if (tagName[0] != '#')
                 tagName = "#" + tagName;
+            if (_context.Tags.Any(x => x.Name == tagName))
+                return false;
             var newTag = new Tag { Name = tagName };
             await _context.Tags.AddAsync(newTag);
             await _context.SaveChangesAsync();

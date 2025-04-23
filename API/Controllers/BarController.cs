@@ -76,7 +76,7 @@ public class BarsController(BarService barService, TagService tagService) : Cont
     public async Task<IActionResult> AddNewTag([FromBody] string tagName)
     {
         var result = await tagService.AddNewTag(tagName);
-        return result ? Ok() : BadRequest("Bad tag");
+        return result ? Ok() : BadRequest("This tag is used");
     }
     
     [HttpPost("bars/newBar")]
@@ -84,13 +84,5 @@ public class BarsController(BarService barService, TagService tagService) : Cont
     {
         var result = await barService.AddNewBarAsync((Bar)newBar);
         return result ? Ok() : BadRequest("Bad bar");
-    }
-    
-    [HttpPost("bars/Favorite")]
-    public async Task<IActionResult> AddFavorite([FromBody] Favorite favorite)
-    {
-        return await barService.AddToFavorites(ClaimTypes.NameIdentifier, favorite.BarId) 
-            ? Ok()
-            : BadRequest("Bad favorite");
     }
 }
