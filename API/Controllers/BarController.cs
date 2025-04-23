@@ -80,9 +80,9 @@ public class BarsController(BarService barService, TagService tagService) : Cont
     }
     
     [HttpPost("bars/newBar")]
-    public async Task<IActionResult> AddNewBar([FromBody] BarViewModel newBar)
+    public async Task<IActionResult> AddNewBar([FromBody] BarRequest newBar)
     {
         var result = await barService.AddNewBarAsync((Bar)newBar);
-        return result ? Ok() : BadRequest("Bad bar");
+        return result ? Ok() : BadRequest("Бар с таким названием уже есть / такого тега не существует");
     }
 }

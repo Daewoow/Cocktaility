@@ -74,6 +74,10 @@ public class BarService
         await using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
+            var existingBar = await _context.Bars.FirstOrDefaultAsync(b => b.Name == bar.Name);
+            if (existingBar is not null)
+                return false;
+            
             var newBar = new Bar
             {
                 Address = bar.Address,
@@ -86,14 +90,26 @@ public class BarService
             await _context.Bars.AddAsync(newBar);
             await _context.SaveChangesAsync();
 
-            if (bar.Tags is not null && bar.Tags.Count() != 0)
+            if (bar.Tags is not null && bar.Tags.Any())
             {
                 foreach (var tag in bar.Tags)
                 {
+                    var normalizedTagName = tag.Name.StartsWith('#') ? tag.Name : $"#{tag.Name}";
+                
+                    var existingTag = await _context.Tags
+                        .FirstOrDefaultAsync(t => t.Name == normalizedTagName);
+                    
+                    if (existingTag == null)
+                    {
+                        existingTag = new Tag { Name = normalizedTagName };
+                        await _context.Tags.AddAsync(existingTag);
+                        await _context.SaveChangesAsync();
+                    }
+
                     await _context.Database.ExecuteSqlInterpolatedAsync(
                         $"""
                          INSERT INTO public."BarTag" ("BarsBarId", "TagsTagId") 
-                                             VALUES ({newBar.BarId}, {tag.TagId})
+                                             VALUES ({newBar.BarId}, {existingTag.TagId})
                          """);
                 }
             }
