@@ -20,17 +20,59 @@
 
         </div>
         <div class="actions">
-            <div class="action">
-                <div class="input-group" id="actionAddTagInputGroup">
-                    <input type="text" class="actionInput" id="tagInput" placeholder="Введите текст...">
+            <div class="input-group bar-form" id="actionAddBarInputGroup" style="display: none;">
+                <!-- Обязательные поля -->
+                <div class="form-group">
+                    <label for="barName">Название бара*</label>
+                    <input type="text" class="form-control" id="barName" placeholder="Введите название" required>
                 </div>
+                <div class="form-group">
+                    <label for="barAddress">Адрес*</label>
+                    <input type="text" class="form-control" id="barAddress" placeholder="Введите адрес" required>
+                </div>
+
+                <!-- Поля со значениями по умолчанию -->
+                <div class="form-group">
+                    <label for="barPhoto">Фото (URL)</label>
+                    <input type="text" class="form-control" id="barPhoto"
+                           placeholder="Введите URL фото">
+                </div>
+                <div class="form-group">
+                    <label for="barMenu">Меню (URL)</label>
+                    <input type="text" class="form-control" id="barMenu"
+                           placeholder="Введите URL меню">
+                </div>
+                <div class="form-group">
+                    <label for="barSite">Сайт (URL)</label>
+                    <input type="text" class="form-control" id="barSite"
+                           placeholder="Введите URL сайта">
+                </div>
+                <div class="form-group">
+                    <label for="barRating">Рейтинг</label>
+                    <input type="number" class="form-control" id="barRating"
+                           min="0" max="5" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="barTimeOfWork">Время работы</label>
+                    <input type="text" class="form-control" id="barTimeOfWork"
+                           placeholder="Введите время работы">
+                </div>
+
+                <!-- Поле для тегов -->
+                <div class="form-group">
+                    <label for="barTags">Теги (через запятую)</label>
+                    <input type="text" class="form-control" id="barTags"
+                           placeholder="Введите теги через запятую">
+                </div>
+            </div>
+            <div class="input-group" id="actionAddTagInputGroup" style="display: none;">
+                <input type="text" class="actionInput" id="tagInput" placeholder="Введите текст...">
+            </div>
+            <div class="action">
                 <button class="btn action-btn" id="addTagButton">Добавить тег</button>
                 <button class="btn action-btn" id="sendTagButton" style="display: none">Отправить</button>
             </div>
             <div class="action">
-                <div class="input-group" id="actionAddBarInputGroup">
-                    <input type="text" class="actionInput" id="barInput" placeholder="Введите текст...">
-                </div>
                 <button class="btn action-btn" id="addBarButton">Добавить бар</button>
                 <button class="btn action-btn" id="sendBarButton" style="display: none">Отправить</button>
             </div>
