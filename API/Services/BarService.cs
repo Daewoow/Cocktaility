@@ -15,10 +15,17 @@ public class BarService
     public async Task<List<Bar>> SearchBarsAsync(IEnumerable<string> tagNames)
     {
         var tagNamesList = tagNames.ToList();
+        var day = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         _context.QueryMetrics.Add(new QueryMetric
         {
-            Day = DateTime.Today.ToString("yyyy-MM-dd"),
+            Day = day,
             TagsCount = tagNamesList.Count,
+        });
+        _context.TagsMetrics.Add(new TagMetric()
+        {
+            Day = day,
+            TagsCount = tagNamesList.Count,
+            Tags = string.Join(", ", tagNamesList)
         });
 		await _context.SaveChangesAsync();
         var tagIds = await _context.Tags
