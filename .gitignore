@@ -257,6 +257,9 @@ paket-files/
 # FAKE - F# Make
 .fake/
 
+/secrets/
+*.txt
+
 # JetBrains Rider
 .idea/
 *.sln.iml
