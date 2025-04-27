@@ -8,8 +8,7 @@ public class BarRequest
     [Required]
     public string Name { get; set; }
 
-    [Required]
-    public string Address { get; set; }
+    [Required] public string Address { get; set; } = "ул. Чапаева, 17";
 
     public string Photo { get; set; } = "https://avatars.mds.yandex.net/get-altay/14185024/2a000001955181176ff4baf3d9141e3c34aa/XXXL";
 

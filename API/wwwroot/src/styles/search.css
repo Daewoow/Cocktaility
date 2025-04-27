@@ -95,7 +95,7 @@ input::placeholder {
 
 .container {
     display: flex;
-    height: calc(100vh - 90px); /*это пиздец, я хуй знает что с этим делать, по другому не придумал*/
+    height: calc(100vh - 90px); /*это поразительно, я не имею ни малейшего понятия, что с этим делать, по другому не придумал*/
     overflow: hidden;
     /*height: 100vh; !*не работает*!*/
     /*width: 100vw;*/

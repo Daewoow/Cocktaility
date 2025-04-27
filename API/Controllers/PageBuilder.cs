@@ -13,7 +13,7 @@ public class PageBuilder
     private Dictionary<string, string> sections = new();
 
     private static string? root;
-    public string Title { get; init; } = "ХУЙ";
+    public string Title { get; init; } = "Title";
     public bool IsAuthenticated { get; init; } = false;
 
     public static void SetRoot(string root)

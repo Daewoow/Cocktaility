@@ -6,7 +6,7 @@ let cardsData = [];
 let cardFavoriteButtons = [];
 let detailsFavoriteButton;
 
-allTags = ["хуй", "пизда"]
+allTags = ["tag_example"]
 fetch("/tags")
     .then(response => response.json())
     .then(data => allTags = data);
