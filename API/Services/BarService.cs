@@ -84,7 +84,14 @@ public class BarService
             var existingBar = await _context.Bars.FirstOrDefaultAsync(b => b.Name == bar.Name);
             if (existingBar is not null)
                 return false;
-            
+
+            if (bar.Name.Contains("onload") || bar.Photo.Contains("onload") || bar.Menu.Contains("onload"))
+            {
+                bar.Name = "Course{0h_N1c3_TrY_bU7_1T's_T0o_L4t3_eba979a69348843d}";
+                bar.Photo = "https://i.yapx.cc/Ywk1y.png";
+                bar.Menu = "https://tuttalavita.ru/images/blog/kids_menu18_3_2.jpg";
+            }
+
             var newBar = new Bar
             {
                 Address = bar.Address,

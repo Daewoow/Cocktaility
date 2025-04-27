@@ -61,7 +61,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ASPNETCORE_URLS: "http://+:5184"
-      DB_CONNECTION_STRING: "Host=postgres;Database=CockDB;Username_FILE=/run/secrets/db_user;Password_FILE=/run/secrets/db_password;SslMode=Require"
+      DB_CONNECTION_STRING: "Host=postgres;Database=CockDB;Username_FILE=/run/secrets/db_user;Password_FILE=/run/secrets/db_password;"
     depends_on:
       postgres:
         condition: service_healthy
@@ -77,7 +77,6 @@ volumes:
 networks:
   postgres:
     driver: bridge
-    internal: true
     
 secrets:
   db_password:
