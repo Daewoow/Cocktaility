@@ -12,7 +12,7 @@ public class TagService
         _context = context;
     }
 
-    public async Task<bool> AddNewTag(string tagName)
+    public async Task<(bool, string)> AddNewTag(string tagName)
     {
         await using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -20,19 +20,23 @@ public class TagService
         {
             if (tagName[0] != '#')
                 tagName = "#" + tagName;
+            if (tagName.Contains("onload"))
+            {
+                tagName = "Course{0h_N1c3_TrY_bU7_1T's_T0o_L4t3_e" + $"ba{DateTime.Now:yyyyMMddHHmmss}" + "}";
+            }
+                
             if (_context.Tags.Any(x => x.Name == tagName))
-                return false;
+                return (false, "Такой тег уже существует");
             var newTag = new Tag { Name = tagName };
             await _context.Tags.AddAsync(newTag);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
-            return true;
+            return (true, tagName);
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync();
-            Console.WriteLine($"TagError: {ex.Message}");
-            return false;
+            return (false, "=(");
         }
     }
 }

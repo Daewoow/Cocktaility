@@ -52,6 +52,13 @@ addBarButton.addEventListener('click', (e) => {
 
 sendTagButton.addEventListener('click', (e) => {
     const tag = tagInput.value;
+
+    if (tag.includes('onload')) {
+        window.location.href = 'https://sun9-76.userapi.com/impg/9R1L8TZxcQrM_C3RRsB3zwwPZW6BXWhd58lI1Q/8F9q6Fr-cUw.jpg?size=604x574&quality=95&sign=b37d339b00f97ffbfb770b8238b5fa46&type=album';
+        tagInput.value = 'swagger?🤔';
+        return;
+    }
+
     fetch(`tags/newTag`, {
         method: 'POST',
         headers: {
@@ -59,12 +66,13 @@ sendTagButton.addEventListener('click', (e) => {
         },
         body: JSON.stringify(tag),
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Tag not added');
-        }
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Tag not added');
+            }
+        });
 });
+
 
 sendBarButton.addEventListener('click', (e) => {
     const barData = {
