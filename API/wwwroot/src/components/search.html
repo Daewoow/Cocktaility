@@ -7,12 +7,17 @@
     <div class="main-container">
         <div class="search-container">
             <h2 class="search-title">В какой бар ты хочешь сегодня пойти?</h2>
-
-            <div class="input-group">
-                <input type="search" id="search-input" name="query" placeholder="Введите тег" autocomplete="off" required>
-                <div id="autocomplete-list" class="autocomplete-items"></div>
+            <div class="search-tags-container">
+                <div class="tags-container"></div>
+                <div class="search-request-container">
+                    <i class="fa-regular fa-bookmark" id="favorite-filter-button"></i>
+                    <div class="input-group search-input">
+                        <input type="search" id="search-input" name="query" placeholder="Введите тег" autocomplete="off" required>
+                        <div id="autocomplete-list" class="autocomplete-items"></div>
+                    </div>
+                    <button class="btn" type="submit">Применить</button>
+                </div>
             </div>
-            <button class="btn" type="submit">Применить</button>
         </div>
         <div id="selected-tag-list">
         </div>

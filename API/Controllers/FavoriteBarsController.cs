@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using API.Models;
+using API.ViewModels;
 
 namespace API.Controllers;
 
@@ -11,14 +12,14 @@ namespace API.Controllers;
 public class FavoriteBarsController(BarService barService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Bar>>> GetAllBars()
+    public async Task<ActionResult<List<Bar>>> GetFavoriteBars()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         try
         {
             var bars = await barService.GetFavoriteBars(userId);
-            return Ok(bars);
+            return Ok(bars.Select(bar => new BarViewModel(bar)).ToList());
         }
         catch (Exception ex)
         {

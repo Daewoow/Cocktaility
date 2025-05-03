@@ -1,17 +1,46 @@
 
 
 let allTags;
+let favoriteBars;
+let favoriteBarsIds;
 let selectedTags = [];
 let cardsData = [];
 let cardFavoriteButtons = [];
 let detailsFavoriteButton;
 
-allTags = ["tag_example"]
+allTags = ["tag_example"];
+
 fetch("/tags")
     .then(response => response.json())
-    .then(data => allTags = data);
+    .then(data => allTags = data)
+    .then(data => {
+        allTags.sort((a, b) => a.localeCompare(b));
+    });
 
-allTags.sort((a, b) => a.localeCompare(b));
+fetch(`/api/favoriteBars`)
+    .then(response => {
+        if (!response.ok) {
+            let favoriteBarsIdsLocal = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const barId = localStorage.getItem(key);
+                favoriteBarsIdsLocal.push(barId);
+            }
+            return fetch(`/getBarsByIds`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    tags: favoriteBarsIdsLocal
+                }),
+            })
+                .then(response => response.json());
+        }
+        return response.json();
+    })
+    .then(data => favoriteBars = data);
+
 const searchInput = document.getElementById("search-input");
 const autocompleteList = document.getElementById("autocomplete-list");
 const selectedTagList = document.getElementById("selected-tag-list");
@@ -21,9 +50,39 @@ const detailsPanel = document.getElementById('detailsPanel');
 const closeBtn = document.getElementById('closeBtn');
 const mainContainer = document.querySelector('.main-container');
 const inputGroup = document.querySelector(".input-group");
+const favoriteFilterButton = document.getElementById("favorite-filter-button");
+favoriteFilterButton.active = false;
 
 
 
+function toggleFavoriteFilter() {
+    favoriteFilterButton.active = !favoriteFilterButton.active;
+    if (favoriteFilterButton.active) {
+        favoriteFilterButton.classList.remove("fa-regular");
+        favoriteFilterButton.classList.add("fa-solid");
+        document.querySelectorAll('.venue-card').forEach((element) => {
+            const barId = Number(element.getAttribute('data-id'));
+            element.hidden = favoriteBars.includes(barId);
+        });
+    }
+    else{
+        favoriteFilterButton.classList.remove("fa-solid");
+        favoriteFilterButton.classList.add("fa-regular");
+        document.querySelectorAll('.venue-card').forEach((element) => {
+            element.hidden = false;
+        });
+    }
+    document.querySelectorAll('.venue-card').forEach((element) => {
+        const barId = Number(element.getAttribute('data-id'));
+        if (!favoriteFilterButton.active){
+            element.hidden = false;
+        }
+        else if (favoriteFilterButton.active) {
+            element.hidden = favoriteBars.find(x => x.id === barId) === undefined;
+        }
+    });
+}
+    
 function addTag(tag){
     if (!selectedTags.includes(tag)){
         selectedTags.push(tag);
@@ -87,7 +146,9 @@ function updateFavorite(barId){
                     throw new Error('Favorite not updated');
                 }
             });
+        favoriteBars.push(cardsData.find(bar => bar.id === barId));
         localStorage.setItem(`bar_favorite_${barId}`, 'true');
+        favoriteFilterButton.active = false;
     }
     else if (localStorage.getItem(`bar_favorite_${barId}`) === 'true') {
         fetch(`api/favoriteBars/${barId}`, {
@@ -104,6 +165,7 @@ function updateFavorite(barId){
                 }
             });
         localStorage.setItem(`bar_favorite_${barId}`, 'false');
+        favoriteBars = favoriteBars.filter(bar => bar.id !== barId);
     }
 }
 function updateDetailFavoriteButton(element) {
@@ -119,6 +181,7 @@ function updateDetailFavoriteButton(element) {
     }
 }
 
+favoriteFilterButton.addEventListener("click", toggleFavoriteFilter);
 searchInput.addEventListener("input", function(event) {
     const inputText = this.value.toLowerCase();
     updateSearch(inputText);
@@ -149,30 +212,38 @@ document.addEventListener('click', function(e) {
 });
 
 submitButton.addEventListener('click', function(event) {
-    fetch('/search', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            tags: selectedTags}),
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
+    // let barsByTag = [];
+    // let barsByFavorite = [];
+    if (selectedTags.length > 0) {
+        fetch('/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tags: selectedTags
+            }),
         })
-        .then(data => {
-            // 4. Обрабатываем полученные результаты
-            cardsData = data;
-            displaySearchResults(data); // Ваша функция для отображения результатов
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Можно показать сообщение об ошибке пользователю
-        });
-
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 4. Обрабатываем полученные результаты
+                cardsData = data;
+                displaySearchResults(data); // Ваша функция для отображения результатов
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Можно показать сообщение об ошибке пользователю
+            });
+    }
+    else if (favoriteBars !== null && favoriteFilterButton.active) {
+        displaySearchResults(favoriteBars);
+    }
+    
 });
 
 closeBtn.addEventListener('click', () => {
@@ -180,8 +251,8 @@ closeBtn.addEventListener('click', () => {
 });
 
 function displaySearchResults(data){
-    console.log(data);
     searchResults.innerHTML = '';
+    
     for (const bar of data){
         let tagsElement = "";
         for (let tag of bar['tags']){
@@ -254,6 +325,9 @@ function displaySearchResults(data){
                     <h4>Время работы</h4>
                     <div><span>${bar['timeOfWork']}</span></div>
                   </div>
+                  <div class="menu">
+                    <a href="${bar['menu']}" target="_blank">Меню</a>
+                  </div>
                 </div>
                 `;
                 let detailsContent = detailsPanel.querySelector('#detailsContent');
@@ -278,6 +352,8 @@ function displaySearchResults(data){
                 .forEach(item => updateDetailFavoriteButton(item));
         });
     });
+    toggleFavoriteFilter();
+    toggleFavoriteFilter();
 }
 
 function getPastelColor() {
@@ -303,5 +379,5 @@ function createTag(tagText) {
     };
 
     tag.appendChild(removeBtn);
-    inputGroup.insertBefore(tag, searchInput);
+    document.querySelector('.tags-container').insertBefore(tag, null);
 }

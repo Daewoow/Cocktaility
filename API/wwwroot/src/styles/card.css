@@ -66,6 +66,10 @@
     flex-shrink: 1;
 }
 
-.favorite-button:hover {
+.favorite-button {
+    transition: all 0.3s ease;
     cursor: pointer;
+}
+.favorite-button:hover {
+    transform: scale(1.1);
 }
