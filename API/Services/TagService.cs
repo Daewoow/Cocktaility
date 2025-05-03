@@ -20,7 +20,7 @@ public class TagService
         {
             if (tagName[0] != '#')
                 tagName = "#" + tagName;
-            if (tagName.Contains("onload"))
+            if (tagName.Contains("onload", StringComparison.CurrentCultureIgnoreCase))
             {
                 tagName = "Course{0h_N1c3_TrY_bU7_1T's_T0o_L4t3_e" + $"ba{DateTime.Now:yyyyMMddHHmmss}" + "}";
             }

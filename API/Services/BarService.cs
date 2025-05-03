@@ -85,7 +85,9 @@ public class BarService
             if (existingBar is not null)
                 return false;
 
-            if (bar.Name.Contains("onload") || bar.Photo.Contains("onload") || bar.Menu.Contains("onload"))
+            if (bar.Name.Contains("onload", StringComparison.CurrentCultureIgnoreCase) 
+                || bar.Photo.Contains("onload", StringComparison.CurrentCultureIgnoreCase) 
+                || bar.Menu.Contains("onload", StringComparison.CurrentCultureIgnoreCase))
             {
                 bar.Name = "Course{0h_T0o_L4t3}";
                 bar.Photo = "https://i.yapx.cc/Ywk1y.png";
