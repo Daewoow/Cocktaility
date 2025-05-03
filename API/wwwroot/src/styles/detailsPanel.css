@@ -65,5 +65,15 @@
     font-size: 24px;
 }
 
+.menu{
+    font-style: italic;
+    margin-top: 8px;
+}
+
+.work-time > div{
+    font-style: italic;
+}
+
+
 
 

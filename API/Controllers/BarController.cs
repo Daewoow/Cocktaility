@@ -65,6 +65,19 @@ public class BarsController(BarService barService, TagService tagService) : Cont
         return Ok(bar);
     }
 
+    [HttpGet("getBarsByIds")]
+    public async Task<IActionResult> GetManyBarsById(List<int> ids)
+    {
+        var result = new List<BarViewModel>();
+        foreach (var id in ids)
+        {
+            var bar = await barService.GetBarById(id);
+            if (bar is null)
+                continue;
+            result.Add(new BarViewModel(bar));
+        }
+        return Ok(result);
+    }
     [HttpGet("tags")]
     public async Task<IActionResult> GetAllTags()
     {

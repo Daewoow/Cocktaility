@@ -3,10 +3,14 @@ body{
     overflow: hidden;
 }
 .search-container {
+    /*display: flex;*/
     position: relative;
-    width: 560px;
+    width: 720px;
     margin: 50px auto;
     text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .input-group {
@@ -14,6 +18,7 @@ body{
     /*border: 1px solid #ccc;*/
     padding: 8px;
     /*width: 300px;*/
+    /*flex-direction: column;*/
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
@@ -39,9 +44,12 @@ input::placeholder {
 }
 
 .search-title {
+    display: flex;
     font-size: 32px;
     margin-bottom: 30px;
+    width: 560px;
     color: #333;
+    text-align: center;
 }
 
 .autocomplete-items {
@@ -121,7 +129,6 @@ input::placeholder {
     color: white;
     padding: 5px 10px;
     border-radius: 12px;
-    display: flex;
     align-items: center;
     font-size: 14px;
 }
@@ -130,6 +137,7 @@ input::placeholder {
     margin-left: 8px;
     cursor: pointer;
     font-weight: bold;
+    flex-shrink: 0;
 }
 
 /*.tag-input {*/
@@ -238,4 +246,42 @@ select.form-control {
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 10px;
+}
+
+.search-request-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    /*justify-content: normal;*/
+}
+
+.search-input {
+    flex: 1;
+}
+
+.search-tags-container{
+    display: block ;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap; /* Перенос тегов на новую строку */
+    gap: 8px; /* Отступ между тегами */
+    padding: 10px;
+}
+
+#favorite-filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+#favorite-filter-button:hover {
+    transform: scale(1.1);
 }

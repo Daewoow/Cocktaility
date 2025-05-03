@@ -97,4 +97,5 @@ public class AccountController(ApplicationContext context, PageBuilder builder) 
         context.Users.Add(newUser);
         return await context.SaveChangesAsync() == 1;
     }
+
 }
