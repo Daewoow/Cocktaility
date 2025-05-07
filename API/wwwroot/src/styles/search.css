@@ -44,12 +44,11 @@ input::placeholder {
 }
 
 .search-title {
-    display: flex;
     font-size: 32px;
     margin-bottom: 30px;
-    width: 560px;
     color: #333;
     text-align: center;
+    width: 100%;
 }
 
 .autocomplete-items {

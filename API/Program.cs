@@ -58,7 +58,7 @@ app.MapControllers();
 PageBuilder.SetRoot(app.Environment.WebRootPath);
 
 app.MapGet("/users", [Authorize(Roles = "Admin")]async (ApplicationContext db) => await db.Users.ToListAsync());
-app.MapGet("/Favorite", [Authorize]async (ApplicationContext db) => await db.Favorites.ToListAsync());
+// app.MapGet("/Favorite", [Authorize]async (ApplicationContext db) => await db.Favorites.ToListAsync());
 app.MapGet("/user/{id:int}", [Authorize]async (int id, ApplicationContext db) =>
     await db.Users.FirstOrDefaultAsync(x => x.Id == id.ToString())); // TODO: id теперь Guid
 app.MapGet("/mainpage", context =>
