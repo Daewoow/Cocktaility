@@ -62,10 +62,10 @@ public class BarsController(BarService barService, TagService tagService) : Cont
         var bar = await barService.GetBarById(id);
         if (bar is null)
             return NotFound();
-        return Ok(bar);
+        return Ok(new BarViewModel(bar));
     }
 
-    [HttpGet("getBarsByIds")]
+    [HttpPost("getBarsByIds")]
     public async Task<IActionResult> GetManyBarsById(List<int> ids)
     {
         var result = new List<BarViewModel>();

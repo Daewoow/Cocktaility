@@ -54,7 +54,7 @@ public class BarService
     }
 
     public async Task<Bar?> GetBarById(int id) 
-        => await _context.Bars.FirstOrDefaultAsync(b => b.BarId == id);
+        => await _context.Bars.Include(bar => bar.Tags).FirstOrDefaultAsync(b => b.BarId == id);
 
     public async Task<IEnumerable<string>> GetAllTags()
     {

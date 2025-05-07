@@ -37,7 +37,7 @@ function showAddressOnMap(address) {
 
     }).catch(function (error) {
         console.error('Ошибка:', error);
-        alert('Адрес не найден');
+        // alert('Адрес не найден');
     });
 }
 
@@ -48,6 +48,6 @@ async function loadBarAndShowOnMap(barId) {
         showAddressOnMap(bar.address + ', Екатеринбург');
     } catch (error) {
         console.error('Ошибка загрузки данных:', error);
-        alert('Не удалось загрузить данные о баре');
+        // alert('Не удалось загрузить данные о баре');
     }
 }

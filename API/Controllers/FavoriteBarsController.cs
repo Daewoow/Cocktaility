@@ -6,16 +6,17 @@ using API.ViewModels;
 
 namespace API.Controllers;
 
-[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class FavoriteBarsController(BarService barService) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("getFavoriteBars")]
     public async Task<ActionResult<List<Bar>>> GetFavoriteBars()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        
+        if (userId == null)
+            return StatusCode(401);
+
         try
         {
             var bars = await barService.GetFavoriteBars(userId);

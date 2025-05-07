@@ -17,23 +17,25 @@ fetch("/tags")
         allTags.sort((a, b) => a.localeCompare(b));
     });
 
-fetch(`/api/favoriteBars`)
+fetch(`/api/favoriteBars/getFavoriteBars`)
     .then(response => {
         if (!response.ok) {
             let favoriteBarsIdsLocal = [];
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
-                const barId = localStorage.getItem(key);
-                favoriteBarsIdsLocal.push(barId);
+                const isFav = localStorage.getItem(key);
+                if (isFav === 'true'){
+                    let lalala = key.split('_');
+                    favoriteBarsIdsLocal.push(Number(lalala[lalala.length - 1]));
+                }
             }
             return fetch(`/getBarsByIds`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    tags: favoriteBarsIdsLocal
-                }),
+                body: JSON.stringify(favoriteBarsIdsLocal
+                ),
             })
                 .then(response => response.json());
         }
@@ -236,7 +238,7 @@ submitButton.addEventListener('click', function(event) {
                 displaySearchResults(data); // Ваша функция для отображения результатов
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.log('Error:', error);
                 // Можно показать сообщение об ошибке пользователю
             });
     }
