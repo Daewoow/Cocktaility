@@ -81,7 +81,7 @@ sendBarButton.addEventListener('click', (e) => {
         photo: document.getElementById('barPhoto').value,
         menu: document.getElementById('barMenu').value,
         site: document.getElementById('barSite').value,
-        rating: parseInt(document.getElementById('barRating').value),
+        rating: 0,
         timeOfWork: document.getElementById('barTimeOfWork').value,
         tags: document.getElementById('barTags').value.split(',').map(tag => tag.trim())
     };
