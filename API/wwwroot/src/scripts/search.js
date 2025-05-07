@@ -1,5 +1,3 @@
-
-
 let allTags;
 let favoriteBars;
 let favoriteBarsIds;
@@ -9,6 +7,31 @@ let cardFavoriteButtons = [];
 let detailsFavoriteButton;
 
 allTags = ["tag_example"];
+
+async function checkAuth() {
+    try {
+        const response = await fetch('/api/auth/check-auth', {
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error("Ошибка проверки авторизации");
+        }
+
+        const data = await response.json();
+        return data.isAuthenticated;
+    } catch (error) {
+        console.error("Ошибка:", error);
+        return false;
+    }
+}
+
+checkAuth().then(isAuth => {
+    if (!isAuth) {
+        const btn = document.querySelector('.btn');
+        if (btn) btn.remove();
+    }
+});
 
 fetch("/tags")
     .then(response => response.json())
@@ -52,39 +75,40 @@ const detailsPanel = document.getElementById('detailsPanel');
 const closeBtn = document.getElementById('closeBtn');
 const mainContainer = document.querySelector('.main-container');
 const inputGroup = document.querySelector(".input-group");
-const favoriteFilterButton = document.getElementById("favorite-filter-button");
-favoriteFilterButton.active = false;
+// const favoriteFilterButton = document.getElementById("favorite-filter-button");
+// favoriteFilterButton.active = false;
 
 
 
-function toggleFavoriteFilter() {
-    favoriteFilterButton.active = !favoriteFilterButton.active;
-    if (favoriteFilterButton.active) {
-        favoriteFilterButton.classList.remove("fa-regular");
-        favoriteFilterButton.classList.add("fa-solid");
-        document.querySelectorAll('.venue-card').forEach((element) => {
-            const barId = Number(element.getAttribute('data-id'));
-            element.hidden = favoriteBars.includes(barId);
-        });
-    }
-    else{
-        favoriteFilterButton.classList.remove("fa-solid");
-        favoriteFilterButton.classList.add("fa-regular");
-        document.querySelectorAll('.venue-card').forEach((element) => {
-            element.hidden = false;
-        });
-    }
-    document.querySelectorAll('.venue-card').forEach((element) => {
-        const barId = Number(element.getAttribute('data-id'));
-        if (!favoriteFilterButton.active){
-            element.hidden = false;
-        }
-        else if (favoriteFilterButton.active) {
-            element.hidden = favoriteBars.find(x => x.id === barId) === undefined;
-        }
-    });
-}
-    
+// function toggleFavoriteFilter() {
+//     favoriteFilterButton.active = !favoriteFilterButton.active;
+//     if (favoriteFilterButton.active) {
+//         favoriteFilterButton.classList.remove("fa-regular");
+//         favoriteFilterButton.classList.add("fa-solid");
+//         document.querySelectorAll('.venue-card').forEach((element) => {
+//             const barId = Number(element.getAttribute('data-id'));
+//             element.hidden = favoriteBars.includes(barId);
+//         });
+//     }
+//     else{
+//         favoriteFilterButton.classList.remove("fa-solid");
+//         favoriteFilterButton.classList.add("fa-regular");
+//         document.querySelectorAll('.venue-card').forEach((element) => {
+//             element.hidden = false;
+//         });
+//     }
+//     document.querySelectorAll('.venue-card').forEach((element) => {
+//         const barId = Number(element.getAttribute('data-id'));
+//         if (!favoriteFilterButton.active){
+//             element.hidden = false;
+//         }
+//         else if (favoriteFilterButton.active) {
+//             element.hidden = favoriteBars.find(x => x.id === barId) === undefined;
+//         }
+//     });
+// }
+//    Закомментил, причина в search.html
+
 function addTag(tag){
     if (!selectedTags.includes(tag)){
         selectedTags.push(tag);
@@ -150,7 +174,7 @@ function updateFavorite(barId){
             });
         favoriteBars.push(cardsData.find(bar => bar.id === barId));
         localStorage.setItem(`bar_favorite_${barId}`, 'true');
-        favoriteFilterButton.active = false;
+        // favoriteFilterButton.active = false;
     }
     else if (localStorage.getItem(`bar_favorite_${barId}`) === 'true') {
         fetch(`api/favoriteBars/${barId}`, {
@@ -183,7 +207,7 @@ function updateDetailFavoriteButton(element) {
     }
 }
 
-favoriteFilterButton.addEventListener("click", toggleFavoriteFilter);
+// favoriteFilterButton.addEventListener("click", toggleFavoriteFilter);
 searchInput.addEventListener("input", function(event) {
     const inputText = this.value.toLowerCase();
     updateSearch(inputText);
@@ -202,10 +226,8 @@ document.addEventListener('click', function(e) {
     const cardElement = e.target.closest('.venue-card');
 
     if (cardElement && !e.target.classList.contains('favorite-button')) {
-        // Клик по карточке - показываем детали
         console.log(e);
         detailsPanel.classList.add('active');
-        // Здесь можно добавить код для заполнения detailsPanel данными карточки
     }
     // else if (!detailsPanel.contains(e.target)) {
     //     // Клик вне карточки и вне панели деталей - скрываем панель
@@ -233,19 +255,16 @@ submitButton.addEventListener('click', function(event) {
                 return response.json();
             })
             .then(data => {
-                // 4. Обрабатываем полученные результаты
                 cardsData = data;
-                displaySearchResults(data); // Ваша функция для отображения результатов
+                displaySearchResults(data);
             })
             .catch(error => {
                 console.log('Error:', error);
-                // Можно показать сообщение об ошибке пользователю
             });
     }
-    else if (favoriteBars !== null && favoriteFilterButton.active) {
-        displaySearchResults(favoriteBars);
-    }
-    
+    // else if (favoriteBars !== null && favoriteFilterButton.active) {
+    //     displaySearchResults(favoriteBars);
+    // }                                                               Закомментил, причина в search.html    
 });
 
 closeBtn.addEventListener('click', () => {
@@ -354,8 +373,8 @@ function displaySearchResults(data){
                 .forEach(item => updateDetailFavoriteButton(item));
         });
     });
-    toggleFavoriteFilter();
-    toggleFavoriteFilter();
+    // toggleFavoriteFilter();
+    // toggleFavoriteFilter();
 }
 
 function getPastelColor() {

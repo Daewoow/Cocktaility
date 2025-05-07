@@ -83,7 +83,10 @@ public class BarService
         {
             var existingBar = await _context.Bars.FirstOrDefaultAsync(b => b.Name == bar.Name);
             if (existingBar is not null)
+            {
+                Console.WriteLine(existingBar);
                 return false;
+            }
 
             if (bar.Name.Contains("onload", StringComparison.CurrentCultureIgnoreCase) 
                 || bar.Photo.Contains("onload", StringComparison.CurrentCultureIgnoreCase) 
