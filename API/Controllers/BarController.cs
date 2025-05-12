@@ -12,7 +12,7 @@ namespace API.Controllers;
 public class BarsController(BarService barService, TagService tagService) : ControllerBase
 {
     [HttpGet("search")]
-    public async Task<IActionResult> GetBars()
+    public async Task<IActionResult> MainSearch()
     {
         var page = new PageBuilder
         {
@@ -28,6 +28,7 @@ public class BarsController(BarService barService, TagService tagService) : Cont
             )
         .AddScripts(false,
 			"https://api-maps.yandex.ru/2.1/?apikey=c34675db-5522-4f61-b4ee-9eda5adca08e&lang=ru_RU",
+            "src/scripts/utils.js",
             "src/scripts/search.js",
             "src/scripts/search_ymaps.js",
             "src/scripts/userActions.js"
