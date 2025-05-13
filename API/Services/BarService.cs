@@ -1,5 +1,4 @@
-﻿using API.Controllers;
-using API.Models;
+﻿using API.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class BarService
@@ -12,10 +11,10 @@ public class BarService
     }
 
     // Сортриует 1) по количеству совпавших тегов; 2) по алфавиту по убыванию
-    public async Task<List<Bar>> SearchBarsAsync(IEnumerable<string> tagNames)
+    public async Task<List<Bar>> SearchBarsAsync(IEnumerable<string> tagNames, string ip="undefined")
     {
         var tagNamesList = tagNames.ToList();
-        var day = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        var day = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " " + ip;
         _context.QueryMetrics.Add(new QueryMetric
         {
             Day = day,

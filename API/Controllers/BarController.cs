@@ -47,7 +47,7 @@ public class BarsController(BarService barService, TagService tagService) : Cont
             return BadRequest("Список тегов не может быть пустым.");
         }
 
-        var bars = await barService.SearchBarsAsync(request.Tags);
+        var bars = await barService.SearchBarsAsync(request.Tags, HttpContext.Connection.RemoteIpAddress.ToString());
         var barsViewModels = bars.Select(b =>
         {
             var barViewModel = new BarViewModel(b);
