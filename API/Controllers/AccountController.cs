@@ -68,7 +68,7 @@ public class AccountController(ApplicationContext context, PageBuilder builder) 
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("Login");
+        return Redirect("search");
     }
     
     [HttpPost]
@@ -116,13 +116,11 @@ public class AccountController(ApplicationContext context, PageBuilder builder) 
             )
             .AddScripts(false,
                 "https://api-maps.yandex.ru/2.1/?apikey=c34675db-5522-4f61-b4ee-9eda5adca08e&lang=ru_RU",
+                "src/scripts/utils.js",
                 "src/scripts/search.js",
                 "src/scripts/search_ymaps.js",
                 "src/scripts/favorite.js"
             )
-            // .AddScripts(true,
-            //     "https://api-maps.yandex.ru/v2.1/?apikey=c34675db-5522-4f61-b4ee-9eda5adca08e&lang=ru_RU\""
-            //     )
             .Build();
         page = page.Replace("<button class=\"btn\" onclick=\"window.location.href='/Favorite'\">Избранное</button>",
             "<button class=\"btn\" onclick=\"window.location.href='/Search'\">Поиск</button>");

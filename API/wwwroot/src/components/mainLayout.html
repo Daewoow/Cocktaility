@@ -16,9 +16,9 @@
     <img src="/public/images/logo.png" alt="Логотип">
   </div>
   <div class="auth-buttons">
-    <button class="btn" onclick="window.location.href='/Favorite'">Избранное</button>
     @if (auth)
     {
+    <button class="btn" onclick="window.location.href='/Favorite'">Избранное</button>
     <button class="btn" onclick="window.location.href='/Logout'">Выйти</button>
     }
     @else
@@ -33,6 +33,25 @@
   <div role="main">
     @Body
   </div>
+<script>
+  async function checkAuth() {
+    try {
+      const response = await fetch('/api/auth/check-auth', {
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка проверки авторизации");
+      }
+
+      const data = await response.json();
+      return data.isAuthenticated;
+    } catch (error) {
+      console.error("Ошибка:", error);
+      return false;
+    }
+  }
+</script>
 @Scripts
 </body>
 </html>
