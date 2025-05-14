@@ -53,8 +53,8 @@ addBarButton.addEventListener('click', (e) => {
 sendTagButton.addEventListener('click', (e) => {
     const tag = tagInput.value;
 
-    if (tag.includes('onload')) {
-        window.location.href = 'https://sun9-76.userapi.com/impg/9R1L8TZxcQrM_C3RRsB3zwwPZW6BXWhd58lI1Q/8F9q6Fr-cUw.jpg?size=604x574&quality=95&sign=b37d339b00f97ffbfb770b8238b5fa46&type=album';
+    if (tag.toLowerCase().includes('onload')) {
+        window.location.href = 'https://i.pinimg.com/736x/d8/49/bc/d849bc8e92409f2a692de81b763b1f99.jpg';
         tagInput.value = 'swagger?🤔';
         return;
     }
