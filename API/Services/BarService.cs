@@ -1,9 +1,12 @@
 ﻿using API.Models;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 
 public class BarService
 {
     private readonly ApplicationContext _context;
+    
+    private static readonly Counter _queriesCounter = Metrics.CreateCounter("bar_queries_total", "Total number of queries.");
 
     public BarService(ApplicationContext context)
     {
@@ -15,6 +18,7 @@ public class BarService
     {
         var tagNamesList = tagNames.ToList();
         var day = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " " + ip;
+        _queriesCounter.Inc();
         _context.QueryMetrics.Add(new QueryMetric
         {
             Day = day,
