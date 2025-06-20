@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using API.Models;
+﻿using API.Models;
 using API.Requests;
 using API.Services;
 using API.ViewModels;
@@ -33,9 +32,6 @@ public class BarsController(BarService barService, TagService tagService) : Cont
             "src/scripts/search_ymaps.js",
             "src/scripts/userActions.js"
             )
-        // .AddScripts(true,
-        //     "https://api-maps.yandex.ru/v2.1/?apikey=c34675db-5522-4f61-b4ee-9eda5adca08e&lang=ru_RU\""
-        //     )
         .Build();
         return Content(page, "text/html");
     }

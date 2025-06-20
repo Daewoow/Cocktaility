@@ -1,5 +1,4 @@
 const loginUrl = "login";
-console.log("Check");
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();

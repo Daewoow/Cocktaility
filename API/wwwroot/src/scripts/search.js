@@ -5,15 +5,6 @@ let cardsData = [];
 
 allTags = ["tag_example"];
 
-
-
-// checkAuth().then(isAuth => {
-//     if (!isAuth) {
-//         const btn = document.querySelector('.btn');
-//         if (btn) btn.remove();
-//     }
-// });
-
 fetch("/tags")
     .then(response => response.json())
     .then(data => allTags = data)
@@ -45,7 +36,8 @@ fetch(`/api/favoriteBars/getFavoriteBars`)
         }
         return response.json();
     })
-    .then(data => favoriteBars = data);
+    .then(data => favoriteBars = data)
+    .catch(error => error.message);
 
 const searchInput = document.getElementById("search-input");
 const autocompleteList = document.getElementById("autocomplete-list");
@@ -56,42 +48,7 @@ const detailsPanel = document.getElementById('detailsPanel');
 const closeBtn = document.getElementById('closeBtn');
 const mainContainer = document.querySelector('.main-container');
 const inputGroup = document.querySelector(".input-group");
-// const favoriteFilterButton = document.getElementById("favorite-filter-button");
-// favoriteFilterButton.active = false;
 
-
-
-// function toggleFavoriteFilter() {
-//     favoriteFilterButton.active = !favoriteFilterButton.active;
-//     if (favoriteFilterButton.active) {
-//         favoriteFilterButton.classList.remove("fa-regular");
-//         favoriteFilterButton.classList.add("fa-solid");
-//         document.querySelectorAll('.venue-card').forEach((element) => {
-//             const barId = Number(element.getAttribute('data-id'));
-//             element.hidden = favoriteBars.includes(barId);
-//         });
-//     }
-//     else{
-//         favoriteFilterButton.classList.remove("fa-solid");
-//         favoriteFilterButton.classList.add("fa-regular");
-//         document.querySelectorAll('.venue-card').forEach((element) => {
-//             element.hidden = false;
-//         });
-//     }
-//     document.querySelectorAll('.venue-card').forEach((element) => {
-//         const barId = Number(element.getAttribute('data-id'));
-//         if (!favoriteFilterButton.active){
-//             element.hidden = false;
-//         }
-//         else if (favoriteFilterButton.active) {
-//             element.hidden = favoriteBars.find(x => x.id === barId) === undefined;
-//         }
-//     });
-// }
-//    Закомментил, причина в search.html
-
-
-// favoriteFilterButton.addEventListener("click", toggleFavoriteFilter);
 searchInput.addEventListener("input", function(event) {
     const inputText = this.value.toLowerCase();
     updateSearch(inputText);
@@ -120,8 +77,6 @@ document.addEventListener('click', function(e) {
 });
 
 submitButton.addEventListener('click', function(event) {
-    // let barsByTag = [];
-    // let barsByFavorite = [];
     if (selectedTags.length > 0) {
         fetch('/search', {
             method: 'POST',
@@ -146,9 +101,6 @@ submitButton.addEventListener('click', function(event) {
                 console.log('Error:', error);
             });
     }
-    // else if (favoriteBars !== null && favoriteFilterButton.active) {
-    //     displaySearchResults(favoriteBars);
-    // }                                                               Закомментил, причина в search.html    
 });
 
 closeBtn.addEventListener('click', () => {

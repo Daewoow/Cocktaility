@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/styles/style.css">
+  <link rel="stylesheet" href="/src/styles/profile.css">
   @Styles
   @HeadScripts
 </head>
@@ -18,8 +19,22 @@
   <div class="auth-buttons">
     @if (auth)
     {
-    <button class="btn" onclick="window.location.href='/Favorite'">Избранное</button>
-    <button class="btn" onclick="window.location.href='/Logout'">Выйти</button>
+    <div class="profile">
+      <div class="profile-trigger">
+        <span class="profile-name">Никнейм</span>
+        <img src="/public/images/profile_mini.png" alt="Иконка" class="profile-icon">
+      </div>
+
+      <div class="profile-buttons">
+        <button class="btn pc-version" id="fav-button" onclick="window.location.href='/Favorite'">Избранное</button>
+        <button class="btn pc-version" id="out-button" onclick="window.location.href='/Logout'">Выйти</button>
+      </div>
+
+      <div class="profile-links mobile-version">
+        <a href="/Favorite" class="profile-link">Избранное</a>
+        <a href="/Logout" class="profile-link">Выйти</a>
+      </div>
+    </div>
     }
     @else
     {
@@ -33,25 +48,17 @@
   <div role="main">
     @Body
   </div>
-<script>
-  async function checkAuth() {
-    try {
-      const response = await fetch('/api/auth/check-auth', {
-        credentials: 'include'
-      });
-
-      if (!response.ok) {
-        throw new Error("Ошибка проверки авторизации");
-      }
-
-      const data = await response.json();
-      return data.isAuthenticated;
-    } catch (error) {
-      console.error("Ошибка:", error);
-      return false;
-    }
-  }
-</script>
 @Scripts
+<script src="/src/scripts/profile.js"></script>
+<script>
+  const profileName = document.querySelector('.profile-name');
+  const user = fetch("api/Auth/current-user")
+          .then(response => response.json())
+          .then(u => {
+            if (profileName !== null) {
+              profileName.textContent = u.user;
+            }
+          });
+</script>
 </body>
 </html>

@@ -12,4 +12,12 @@ public class AuthController: ControllerBase
         Console.WriteLine(userId);
         return userId == null ? Ok(new {isAuthenticated = false}) : Ok(new { isAuthenticated = true });
     }
+
+    [HttpGet("current-user")]
+    public IActionResult CurrentUser()
+    {
+        if (!User.Identity.IsAuthenticated)
+            return Unauthorized();
+        return Ok(new {user = User.Identity.Name});
+    }
 }
