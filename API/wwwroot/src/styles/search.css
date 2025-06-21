@@ -114,6 +114,7 @@ input::placeholder {
 
 
 .main-container {
+    
     padding: 20px;
     transition: margin-left 0.3s ease;
     overflow: auto;
@@ -160,6 +161,10 @@ input::placeholder {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+.full-actions{
+    display: none;
+    flex-direction: column;
+}
 .btn.action-btn {
     display: flex;
     margin: 5px;
@@ -190,8 +195,10 @@ input::placeholder {
     margin-bottom: 10px;
 }
 
-.bar-form {
-    display: none;
+.bar-form.active{
+    display: flex;
+    /*margin-left: 0;*/
+
 }
 
 .form-group {
@@ -283,4 +290,77 @@ select.form-control {
 
 #favorite-filter-button:hover {
     transform: scale(1.1);
+}
+
+
+@media (max-width: 480px) {
+    .main-container {
+        /*margin: 0;*/
+        padding: 0 !important;
+        display: flex;
+        flex-direction: column;
+    }
+    .search-container{
+        width: auto;
+        margin: 10px 0;
+    }
+    
+    .search-title {
+        font-size:  1.75rem;
+        margin: auto;
+    }
+    
+    .search-request-container{
+        display: block;
+    }
+    
+    .search-input {
+        margin: 0 0;
+    }
+    
+    #search-results{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .actions{
+        position: static;
+        margin-bottom: 0;
+        /*right: 0;*/
+        /*bottom: 0;*/
+        flex-direction: row;
+        display: flex;
+        align-items: flex-end;
+        padding: 15px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .full-actions{
+        display: none; 
+        flex-direction: column;
+    }
+
+    .bar-form{
+        z-index: 9999;
+        position: relative;
+        bottom: 0;
+        /*width: 50%;*/
+        
+        /*width: 100%;*/
+        /*margin-left: -500px;*/
+        /*overflow: auto;*/
+        /*transition: margin-left 0.3s ease;*/
+        /*background: #fff;*/
+        /*box-shadow: 2px 0 5px rgba(0,0,0,0.1);*/
+        /*height: 100vh;*/
+    }
+
+    .action-buttons{
+        display: flex;
+        flex-direction: row;
+    }
+    
 }

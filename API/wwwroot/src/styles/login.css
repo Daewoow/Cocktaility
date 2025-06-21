@@ -96,3 +96,41 @@ input::placeholder {
     margin-top: 10px;
     display: none;
 }
+
+@media (max-width: 480px) {
+    .login-wrapper {
+        margin-top: 10vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .logo img {
+        max-width: 90%;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    #loginForm {
+        width: 100%;
+    }
+    
+    .login-container {
+        width: 80%;
+        /*margin: auto 30px;*/
+    }
+}
+
+@media (max-width: 320px) {
+    .login-wrapper {
+        margin-top: 5vh;
+    }
+
+    input {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+    
+}

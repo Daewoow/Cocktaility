@@ -142,6 +142,7 @@ function displaySearchResults(data){
             }
             const cardId = Number(this.getAttribute('data-id'));
             detailsPanel.classList.add('active');
+            detailsPanel.scrollTop = 0.01;
             const bar = cardsData.find(card => card['id'] === cardId);
 
             if (bar){
@@ -229,7 +230,7 @@ function createTag(tagText) {
     const removeBtn = document.createElement('span');
     removeBtn.className = 'remove-tag';
     removeBtn.innerText = '×';
-    removeBtn.onclick = () => {
+    tag.onclick = () => {
         tag.remove();
         let index = selectedTags.indexOf(tagText);
         if (index !== -1) {

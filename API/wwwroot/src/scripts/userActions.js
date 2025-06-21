@@ -32,11 +32,15 @@
 
         function toggleBarFrom(flag) {
             if (flag) {
-                actionAddBarInputGroup.style.display = 'flex';
+                // actionAddBarInputGroup.style.display = 'flex';
+                actionAddBarInputGroup.classList.add('active');
+                
                 sendBarButton.style.display = 'flex';
                 addBarButton.style.display = 'none';
             } else {
-                actionAddBarInputGroup.style.display = 'none';
+                // actionAddBarInputGroup.style.display = 'none';
+                actionAddBarInputGroup.classList.remove('active');
+                
                 sendBarButton.style.display = 'none';
                 addBarButton.style.display = 'flex';
             }

@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Коктейлити</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,18 +14,18 @@
 </head>
 <body>
 <header class="header">
-  <div class="logo">
+  <div class="logo" onclick="window.location.href='/search'">
     <img src="/public/images/logo.png" alt="Логотип">
   </div>
   <div class="auth-buttons">
-    @if (auth)
-    {
+    
     <div class="profile">
       <div class="profile-trigger">
-        <span class="profile-name">Никнейм</span>
+        <span class="profile-name"></span>
         <img src="/public/images/profile_mini.png" alt="Иконка" class="profile-icon">
       </div>
-
+      @if (auth)
+      {
       <div class="profile-buttons">
         <button class="btn pc-version" id="fav-button" onclick="window.location.href='/Favorite'">Избранное</button>
         <button class="btn pc-version" id="out-button" onclick="window.location.href='/Logout'">Выйти</button>
@@ -34,13 +35,21 @@
         <a href="/Favorite" class="profile-link">Избранное</a>
         <a href="/Logout" class="profile-link">Выйти</a>
       </div>
+      }
+      @else
+      {
+      <div class="profile-buttons">
+        <button class="btn pc-version" id="fav-button" onclick="window.location.href='/Favorite'">Войти</button>
+        <button class="btn pc-version" id="out-button" onclick="window.location.href='/Logout'">Регистрация</button>
+      </div>
+  
+      <div class="profile-links mobile-version">
+        <a href="/Favorite" class="profile-link">Войти</a>
+        <a href="/Logout" class="profile-link">Регистрация</a>
+      </div>
+      }
     </div>
-    }
-    @else
-    {
-    <button class="btn login-btn" onclick="window.location.href='/Login'">Войти</button>
-    <button class="btn register-btn" onclick="window.location.href='/Register'">Регистрация</button>
-    }
+      
   </div>
   <script>
   </script>

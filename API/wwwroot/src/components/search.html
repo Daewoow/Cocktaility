@@ -2,7 +2,7 @@
     <aside class="details-panel" id="detailsPanel">
         <button class="close-btn" id="closeBtn">×</button>
         <div class="details-content" id="detailsContent"></div>
-        <div id="map" style="width: 600px; height: 400px"></div>
+        <div id="map" style="width: min(500px, 100vw); height: 400px"></div>
     </aside>
     <div class="main-container">
         <div class="search-container">
@@ -24,57 +24,61 @@
 
         </div>
         <div class="actions">
-            <div class="full-actions" style="display: none; flex-direction: column;">
-                <div class="input-group bar-form" id="actionAddBarInputGroup" style="display: none;">
-                    <!-- Обязательные поля -->
-                    <div class="form-group">
-                        <label for="barName">Название бара*</label>
-                        <input type="text" class="form-control" id="barName" placeholder="Введите название" required>
+            <div class="full-actions">
+                <div class="action-inputs">
+                    <div class="input-group bar-form" id="actionAddBarInputGroup" >
+                        <!-- Обязательные поля -->
+                        <div class="form-group">
+                            <label for="barName">Название бара*</label>
+                            <input type="text" class="form-control" id="barName" placeholder="Введите название" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="barAddress">Адрес*</label>
+                            <input type="text" class="form-control" id="barAddress" placeholder="Введите адрес" required>
+                        </div>
+
+                        <!-- Поля со значениями по умолчанию -->
+                        <div class="form-group">
+                            <label for="barPhoto">Фото (URL)</label>
+                            <input type="text" class="form-control" id="barPhoto"
+                                   placeholder="Введите URL фото">
+                        </div>
+                        <div class="form-group">
+                            <label for="barMenu">Меню (URL)</label>
+                            <input type="text" class="form-control" id="barMenu"
+                                   placeholder="Введите URL меню">
+                        </div>
+                        <div class="form-group">
+                            <label for="barSite">Сайт (URL)</label>
+                            <input type="text" class="form-control" id="barSite"
+                                   placeholder="Введите URL сайта">
+                        </div>
+                        <div class="form-group">
+                            <label for="barTimeOfWork">Время работы</label>
+                            <input type="text" class="form-control" id="barTimeOfWork"
+                                   placeholder="Введите время работы">
+                        </div>
+
+                        <!-- Поле для тегов -->
+                        <div class="form-group">
+                            <label for="barTags">Теги (через запятую)</label>
+                            <input type="text" class="form-control" id="barTags"
+                                   placeholder="Введите теги через запятую">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="barAddress">Адрес*</label>
-                        <input type="text" class="form-control" id="barAddress" placeholder="Введите адрес" required>
-                    </div>
-    
-                    <!-- Поля со значениями по умолчанию -->
-                    <div class="form-group">
-                        <label for="barPhoto">Фото (URL)</label>
-                        <input type="text" class="form-control" id="barPhoto"
-                               placeholder="Введите URL фото">
-                    </div>
-                    <div class="form-group">
-                        <label for="barMenu">Меню (URL)</label>
-                        <input type="text" class="form-control" id="barMenu"
-                               placeholder="Введите URL меню">
-                    </div>
-                    <div class="form-group">
-                        <label for="barSite">Сайт (URL)</label>
-                        <input type="text" class="form-control" id="barSite"
-                               placeholder="Введите URL сайта">
-                    </div>
-                    <div class="form-group">
-                        <label for="barTimeOfWork">Время работы</label>
-                        <input type="text" class="form-control" id="barTimeOfWork"
-                               placeholder="Введите время работы">
-                    </div>
-    
-                    <!-- Поле для тегов -->
-                    <div class="form-group">
-                        <label for="barTags">Теги (через запятую)</label>
-                        <input type="text" class="form-control" id="barTags"
-                               placeholder="Введите теги через запятую">
+                    <div class="input-group" id="actionAddTagInputGroup" style="display: none;">
+                        <input type="text" class="actionInput" id="tagInput" placeholder="Введите текст...">
                     </div>
                 </div>
-                <div class="input-group" id="actionAddTagInputGroup" style="display: none;">
-                    <input type="text" class="actionInput" id="tagInput" placeholder="Введите текст...">
-                </div>
-                <div class="action">
-                    <button class="btn action-btn" id="addTagButton">Добавить тег</button>
-                    <button class="btn action-btn" id="sendTagButton" style="display: none">Отправить</button>
-                </div>
-                <div class="action">
-                    <button class="btn action-btn" id="addBarButton">Добавить бар</button>
-                    <button class="btn action-btn" id="sendBarButton" style="display: none">Отправить</button>
+                <div class="action-buttons">
+                    <div class="action">
+                        <button class="btn action-btn" id="addTagButton">Добавить тег</button>
+                        <button class="btn action-btn" id="sendTagButton" style="display: none">Отправить</button>
+                    </div>
+                    <div class="action">
+                        <button class="btn action-btn" id="addBarButton">Добавить бар</button>
+                        <button class="btn action-btn" id="sendBarButton" style="display: none">Отправить</button>
+                    </div>
                 </div>
             </div>
             <div class="warnings" style="display: none">
