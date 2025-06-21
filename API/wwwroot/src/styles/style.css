@@ -36,6 +36,10 @@ body {
     height: auto; 
 }
 
+.logo:hover {
+    cursor: pointer;
+}
+
 .btn {
     padding: 15px 40px;
     background-color: #CBBAED;

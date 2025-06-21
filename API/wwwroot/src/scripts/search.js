@@ -49,6 +49,17 @@ const closeBtn = document.getElementById('closeBtn');
 const mainContainer = document.querySelector('.main-container');
 const inputGroup = document.querySelector(".input-group");
 
+
+closeBtn.addEventListener('click', () => {
+    detailsPanel.classList.remove('active');
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        detailsPanel.classList.remove('active');
+    }
+});
+
 searchInput.addEventListener("input", function(event) {
     const inputText = this.value.toLowerCase();
     updateSearch(inputText);
@@ -101,8 +112,4 @@ submitButton.addEventListener('click', function(event) {
                 console.log('Error:', error);
             });
     }
-});
-
-closeBtn.addEventListener('click', () => {
-    detailsPanel.classList.remove('active');
 });
