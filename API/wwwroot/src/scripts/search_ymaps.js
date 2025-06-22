@@ -6,7 +6,6 @@ document.querySelector('.main-container').addEventListener('click', function(eve
 
     if (card) {
         const venueId = card.getAttribute('data-id');
-        console.log('Выбран бар с ID:', venueId);
         loadBarAndShowOnMap(venueId);
     }
 });

@@ -78,7 +78,6 @@ document.addEventListener('click', function(e) {
     const cardElement = e.target.closest('.venue-card');
 
     if (cardElement && !e.target.classList.contains('favorite-button')) {
-        console.log(e);
         detailsPanel.classList.add('active');
     }
 });

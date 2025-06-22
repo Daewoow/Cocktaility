@@ -194,7 +194,6 @@ function createImageElement(bar){
     image.src = `${bar['photo']}`;
     image.alt = "Фото заведения";
     image.className = "description-image";
-    console.log(image);
     return image;
 }
 
