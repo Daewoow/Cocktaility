@@ -1,4 +1,5 @@
-﻿const isMobile = /Android|webOS|iPhone|Mac|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);        
+﻿const isMobile = /Android|webOS|iPhone|Mac|iPad|iPod|BlackBerry|IEMobile|Chrome|Opera Mini/i.test(navigator.userAgent);
+alert(navigator.userAgent);
 
 if (isMobile) {
     const trigger = document.querySelector('.profile-trigger');

@@ -3,22 +3,12 @@
         selectedTags.push(tag);
         createTag(tag);
     }
-    // selectedTagList.innerHTML = '';
-    // selectedTags.forEach(tag => {
-    //     const itemElement = document.createElement('span');
-    //     itemElement.classList.add('selected-tag');
-    //     itemElement.textContent = tag;
-    //     console.log(selectedTagList);
-    //     selectedTagList.appendChild(itemElement);
-    // });
-
 }
 
 function updateSearch(searchQuery){
     autocompleteList.innerHTML = '';
 
     let filteredData;
-    // Фильтрация данных
     if (searchQuery.length > 0){
 
         filteredData = allTags.filter(item =>
@@ -29,17 +19,12 @@ function updateSearch(searchQuery){
         filteredData = allTags;
     }
 
-    // Отображение подсказок
     filteredData.forEach(item => {
         const itemElement = document.createElement('div');
         itemElement.classList.add('autocomplete-item');
         itemElement.textContent = item;
-
-        // Обработчик клика по подсказке
         itemElement.addEventListener('click', function() {
-            // searchInput.value = item;
             addTag(item);
-            // autocompleteList.innerHTML = '';
         });
 
         autocompleteList.appendChild(itemElement);
@@ -63,7 +48,6 @@ function updateFavorite(barId){
             });
         favoriteBars.push(cardsData.find(bar => bar.id === barId));
         localStorage.setItem(`bar_favorite_${barId}`, 'true');
-        // favoriteFilterButton.active = false;
     }
     else if (localStorage.getItem(`bar_favorite_${barId}`) === 'true') {
         fetch(`api/favoriteBars/${barId}`, {
@@ -138,7 +122,7 @@ function displaySearchResults(data){
     cards.forEach(card => {
         card.addEventListener('click', function(event) {
             if (event.target.closest('.favorite-button')) {
-                return; // Прерываем выполнение, если клик был по кнопке
+                return;
             }
             const cardId = Number(this.getAttribute('data-id'));
             detailsPanel.classList.add('active');
@@ -203,8 +187,6 @@ function displaySearchResults(data){
                 .forEach(item => updateDetailFavoriteButton(item));
         });
     });
-    // toggleFavoriteFilter();
-    // toggleFavoriteFilter();
 }
 
 function createImageElement(bar){

@@ -1,5 +1,6 @@
-set -e 
+#!/bin/bash
 
+set -e 
 
 docker compose down || true
 git pull origin main

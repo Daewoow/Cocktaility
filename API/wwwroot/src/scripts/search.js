@@ -81,10 +81,6 @@ document.addEventListener('click', function(e) {
         console.log(e);
         detailsPanel.classList.add('active');
     }
-    // else if (!detailsPanel.contains(e.target)) {
-    //     // Клик вне карточки и вне панели деталей - скрываем панель
-    //     detailsPanel.classList.remove('active');
-    // }
 });
 
 submitButton.addEventListener('click', function(event) {
